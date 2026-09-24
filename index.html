@@ -77,6 +77,9 @@ nav.top .wrap{display:flex; align-items:center; justify-content:space-between; h
 .method-figure-img{display:block; width:100%; height:auto; max-height:620px; object-fit:contain; border-radius:18px; border:1px solid rgba(255,255,255,.075); box-shadow:0 16px 40px rgba(0,0,0,.12)}
 @media (max-width:720px){.flowgrid{grid-template-columns:1fr; grid-template-rows:auto auto auto auto; row-gap:10px}.flowhead--left{grid-column:1; grid-row:1}.flowhead--right{display:none}.flowbody--left{grid-column:1; grid-row:2}.flowarrow{grid-column:1; grid-row:3; transform:none}.flowbody--right{grid-column:1; grid-row:4}}
 
+.media-element{width:100%; height:100%; display:block; object-fit:cover; position:absolute; inset:0}
+.thumb .media-element{position:absolute; inset:0; border-radius:5px}
+.figure-slot .media-element.media-contain,.media-contain .media-element{object-fit:contain}
 .tile{aspect-ratio:16/9; border-radius:10px; position:relative; overflow:hidden; display:flex; align-items:flex-end; box-shadow:var(--shadow); border:1px solid rgba(255,255,255,.045)}
 .tile .tag{font-family:var(--mono); font-size:.62rem; letter-spacing:.02em; color:#fff; background:rgba(0,0,0,.45); padding:.25rem .5rem; border-radius:6px; margin:.45rem}
 .tile .play{position:absolute; top:.5rem; right:.5rem; width:20px; height:20px; border-radius:50%; background:rgba(255,255,255,.85); display:flex; align-items:center; justify-content:center; font-size:.6rem; color:#111}
@@ -174,20 +177,20 @@ footer{border-top:1px solid var(--line); padding:34px 0; text-align:center; colo
 </nav>
 
 <header class="hero wrap">
-  <div class="eyebrow">arXiv</div>
+  <div class="eyebrow">Under review — ICLR 2027</div>
   <h1>DBL-Diffusion</h1>
-  <p class="sub"><span class="sub-line">Explicit Layer Modeling for Video Object Insertion and Video Layer Decomposition</span><span class="sub-line">Layered video diffusion framework that first jointly generates RGB scene content and RGBA foreground layers.</span></p>
-  <div class="authors">Kyujin Han, Seungjoo Shin, Sunghyun Cho</div>
-  <div class="venue">POSTECH, CG Graphics Lab</div>
+  <p class="sub"><span class="sub-line">Explicit Layer Modeling for Video Object Insertion and Video Layer Decomposition</span><span class="sub-line">a dual-branch diffusion framework that jointly generates RGB scene content and RGBA foreground layers.</span></p>
+  <div class="authors">Anonymous Authors</div>
+  <div class="venue">Paper under double-blind review · anonymized for review</div>
   <div class="btnrow">
     <!-- Replace each href with your actual resource URL. -->
-    <a class="btn primary" href="https://arxiv.org/abs/2607.25802">Paper PDF</a>
-    <a class="btn" href="https://github.com/KyujinHan/DBL-Diffusion">Code</a>
-    <a class="btn" href="#">🤗TriLayer Dataset</a>
-    <a class="btn" href="#">🤗Weights</a>
+    <a class="btn primary" href="#">Paper PDF</a>
+    <a class="btn" href="#">Code</a>
+    <a class="btn" href="#">TriLayer Dataset</a>
+    <a class="btn" href="#">Weights</a>
     <a class="btn" href="#">Supple. Video</a>
   </div>
-  <div class="note">🤗We will publicly release the code, dataset, and pretrained models upon paper acceptance.🤗</div>
+  <div class="note">Links will be released upon acceptance, in accordance with double-blind review.</div>
 </header>
 
 <div class="wrap" style="padding-bottom:8px">
@@ -208,15 +211,15 @@ footer{border-top:1px solid var(--line); padding:34px 0; text-align:center; colo
     <div class="flowhead flowhead--right" aria-hidden="true"></div>
     <div class="flowbody flowbody--left">
       <div class="grid2">
-        <div class="tile tile--src"><span class="tag">BG video (input)</span><span class="play">▶</span></div>
+        <div class="tile tile--src" data-src="assets/video/source_01.mp4"><span class="tag">BG video (input)</span></div>
         <div class="figure-slot frame"><span>🖼</span><span>Edited 1st frame E</span></div>
       </div>
     </div>
     <div class="flowarrow" aria-hidden="true">→</div>
     <div class="flowbody flowbody--right">
       <div class="grid2">
-        <div class="tile tile--alpha"><span class="tag">FG layer (RGBA)</span></div>
-        <div class="tile tile--comp"><span class="tag">Composite</span><span class="play">▶</span></div>
+        <div class="tile tile--alpha" data-src="assets/video/foreground_01.mp4"><span class="tag">FG layer (RGBA)</span></div>
+        <div class="tile tile--comp" data-src="assets/video/composite_01.mp4"><span class="tag">Composite</span></div>
       </div>
     </div>
   </div>
@@ -228,13 +231,13 @@ footer{border-top:1px solid var(--line); padding:34px 0; text-align:center; colo
     <div class="flowhead flowhead--left"><span class="tasklabel dec">DBL-Decompose</span></div>
     <div class="flowhead flowhead--right" aria-hidden="true"></div>
     <div class="flowbody flowbody--left">
-      <div class="grid2"><div class="tile tile--comp"><span class="tag">Composite (input)</span><span class="play">▶</span></div></div>
+      <div class="grid2"><div class="tile tile--comp" data-src="assets/video/composite_02.mp4"><span class="tag">Composite (input)</span></div></div>
     </div>
     <div class="flowarrow" aria-hidden="true">→</div>
     <div class="flowbody flowbody--right">
       <div class="grid2">
-        <div class="tile tile--bg"><span class="tag">BG video</span><span class="play">▶</span></div>
-        <div class="tile tile--alpha"><span class="tag">FG layer (RGBA)</span></div>
+        <div class="tile tile--bg" data-src="assets/video/background_01.mp4"><span class="tag">BG video</span></div>
+        <div class="tile tile--alpha" data-src="assets/video/foreground_02.mp4"><span class="tag">FG layer (RGBA)</span></div>
       </div>
     </div>
   </div>
@@ -252,48 +255,48 @@ footer{border-top:1px solid var(--line); padding:34px 0; text-align:center; colo
     <h3 style="margin-bottom:14px">Video Layered Object Insertion — BG → FG + Composite</h3>
     <div class="exgrid" style="margin-bottom:40px">
       <div class="excard"><div class="grid3">
-        <div class="tile tile--src"><span class="tag">BG</span></div>
-        <div class="tile tile--alpha"><span class="tag">FG</span></div>
-        <div class="tile tile--comp"><span class="tag">Comp</span></div>
+        <div class="tile tile--src" data-src="assets/video/source_02.mp4"><span class="tag">BG</span></div>
+        <div class="tile tile--alpha" data-src="assets/video/foreground_03.mp4"><span class="tag">FG</span></div>
+        <div class="tile tile--comp" data-src="assets/video/composite_03.mp4"><span class="tag">Comp</span></div>
       </div><div class="excaption">"Add baby."</div></div>
       <div class="excard"><div class="grid3">
-        <div class="tile tile--src"><span class="tag">BG</span></div>
-        <div class="tile tile--alpha"><span class="tag">FG</span></div>
-        <div class="tile tile--comp"><span class="tag">Comp</span></div>
+        <div class="tile tile--src" data-src="assets/video/source_03.mp4"><span class="tag">BG</span></div>
+        <div class="tile tile--alpha" data-src="assets/video/foreground_04.mp4"><span class="tag">FG</span></div>
+        <div class="tile tile--comp" data-src="assets/video/composite_04.mp4"><span class="tag">Comp</span></div>
       </div><div class="excaption">"Add wooden boat."</div></div>
       <div class="excard"><div class="grid3">
-        <div class="tile tile--src"><span class="tag">BG</span></div>
-        <div class="tile tile--alpha"><span class="tag">FG</span></div>
-        <div class="tile tile--comp"><span class="tag">Comp</span></div>
+        <div class="tile tile--src" data-src="assets/video/source_04.mp4"><span class="tag">BG</span></div>
+        <div class="tile tile--alpha" data-src="assets/video/foreground_05.mp4"><span class="tag">FG</span></div>
+        <div class="tile tile--comp" data-src="assets/video/composite_05.mp4"><span class="tag">Comp</span></div>
       </div><div class="excaption">"Add dusty car."</div></div>
       <div class="excard"><div class="grid3">
-        <div class="tile tile--src"><span class="tag">BG</span></div>
-        <div class="tile tile--alpha"><span class="tag">FG</span></div>
-        <div class="tile tile--comp"><span class="tag">Comp</span></div>
+        <div class="tile tile--src" data-src="assets/video/source_05.mp4"><span class="tag">BG</span></div>
+        <div class="tile tile--alpha" data-src="assets/video/foreground_06.mp4"><span class="tag">FG</span></div>
+        <div class="tile tile--comp" data-src="assets/video/composite_06.mp4"><span class="tag">Comp</span></div>
       </div><div class="excaption">"Add dog."</div></div>
     </div>
 
     <h3 style="margin-bottom:14px">Video Layer Decomposition — Composite → BG + FG</h3>
     <div class="exgrid">
       <div class="excard"><div class="grid3">
-        <div class="tile tile--comp"><span class="tag">Comp</span></div>
-        <div class="tile tile--bg"><span class="tag">BG</span></div>
-        <div class="tile tile--alpha"><span class="tag">FG</span></div>
+        <div class="tile tile--comp" data-src="assets/video/composite_07.mp4"><span class="tag">Comp</span></div>
+        <div class="tile tile--bg" data-src="assets/video/background_02.mp4"><span class="tag">BG</span></div>
+        <div class="tile tile--alpha" data-src="assets/video/foreground_07.mp4"><span class="tag">FG</span></div>
       </div><div class="excaption">"Decompose turtle."</div></div>
       <div class="excard"><div class="grid3">
-        <div class="tile tile--comp"><span class="tag">Comp</span></div>
-        <div class="tile tile--bg"><span class="tag">BG</span></div>
-        <div class="tile tile--alpha"><span class="tag">FG</span></div>
+        <div class="tile tile--comp" data-src="assets/video/composite_08.mp4"><span class="tag">Comp</span></div>
+        <div class="tile tile--bg" data-src="assets/video/background_03.mp4"><span class="tag">BG</span></div>
+        <div class="tile tile--alpha" data-src="assets/video/foreground_08.mp4"><span class="tag">FG</span></div>
       </div><div class="excaption">"Decompose woman."</div></div>
       <div class="excard"><div class="grid3">
-        <div class="tile tile--comp"><span class="tag">Comp</span></div>
-        <div class="tile tile--bg"><span class="tag">BG</span></div>
-        <div class="tile tile--alpha"><span class="tag">FG</span></div>
+        <div class="tile tile--comp" data-src="assets/video/composite_09.mp4"><span class="tag">Comp</span></div>
+        <div class="tile tile--bg" data-src="assets/video/background_04.mp4"><span class="tag">BG</span></div>
+        <div class="tile tile--alpha" data-src="assets/video/foreground_09.mp4"><span class="tag">FG</span></div>
       </div><div class="excaption">"Decompose pelican."</div></div>
       <div class="excard"><div class="grid3">
-        <div class="tile tile--comp"><span class="tag">Comp</span></div>
-        <div class="tile tile--bg"><span class="tag">BG</span></div>
-        <div class="tile tile--alpha"><span class="tag">FG</span></div>
+        <div class="tile tile--comp" data-src="assets/video/composite_10.mp4"><span class="tag">Comp</span></div>
+        <div class="tile tile--bg" data-src="assets/video/background_05.mp4"><span class="tag">BG</span></div>
+        <div class="tile tile--alpha" data-src="assets/video/foreground_10.mp4"><span class="tag">FG</span></div>
       </div><div class="excaption">"Decompose sheep."</div></div>
     </div>
   </div>
@@ -308,20 +311,20 @@ footer{border-top:1px solid var(--line); padding:34px 0; text-align:center; colo
     </div>
 
     <div class="thumbstrip" id="tri-thumbs">
-      <button class="thumb tile tile--comp active" aria-label="Dog on the beach" onclick="pick('tri',this,'Dog running on the beach')"><span class="play">▶</span></button>
-      <button class="thumb tile tile--comp" aria-label="Cyclist in the city" onclick="pick('tri',this,'Cyclist riding through the city')"><span class="play">▶</span></button>
-      <button class="thumb tile tile--comp" aria-label="Kayak on the river" onclick="pick('tri',this,'Kayak paddling down the river')"><span class="play">▶</span></button>
-      <button class="thumb tile tile--comp" aria-label="Skateboarder at the park" onclick="pick('tri',this,'Skateboarder at the park')"><span class="play">▶</span></button>
-      <button class="thumb tile tile--comp" aria-label="Person with an umbrella" onclick="pick('tri',this,'Pedestrian with an umbrella')"><span class="play">▶</span></button>
-      <button class="thumb tile tile--comp" aria-label="Horse rider on the trail" onclick="pick('tri',this,'Horse and rider on a forest trail')"><span class="play">▶</span></button>
+      <button class="thumb tile active" data-src="assets/trilayer/thumb_01.jpg" aria-label="Dog on the beach" onclick="pick('tri',this,'Dog running on the beach')"></button>
+      <button class="thumb tile" data-src="assets/trilayer/thumb_02.jpg" aria-label="Cyclist in the city" onclick="pick('tri',this,'Cyclist riding through the city')"></button>
+      <button class="thumb tile" data-src="assets/trilayer/thumb_03.jpg" aria-label="Kayak on the river" onclick="pick('tri',this,'Kayak paddling down the river')"></button>
+      <button class="thumb tile" data-src="assets/trilayer/thumb_04.jpg" aria-label="Skateboarder at the park" onclick="pick('tri',this,'Skateboarder at the park')"></button>
+      <button class="thumb tile" data-src="assets/trilayer/thumb_05.jpg" aria-label="Person with an umbrella" onclick="pick('tri',this,'Pedestrian with an umbrella')"></button>
+      <button class="thumb tile" data-src="assets/trilayer/thumb_06.jpg" aria-label="Horse rider on the trail" onclick="pick('tri',this,'Horse and rider on a forest trail')"></button>
     </div>
     <p class="excaption" id="tri-caption">Dog running on the beach</p>
     <div class="triplet" style="margin-bottom:10px">
-      <div class="tile tile--comp"><span class="tag">Composite</span><span class="play">▶</span></div>
-      <div class="tile tile--bg"><span class="tag">Background</span><span class="play">▶</span></div>
-      <div class="tile tile--alpha"><span class="tag">Foreground (RGBA)</span></div>
+      <div class="tile tile--comp" data-src="assets/video/composite_11.mp4"><span class="tag">Composite</span></div>
+      <div class="tile tile--bg" data-src="assets/video/background_06.mp4"><span class="tag">Background</span></div>
+      <div class="tile tile--alpha" data-src="assets/video/foreground_11.mp4"><span class="tag">Foreground (RGBA)</span></div>
     </div>
-    <p class="note" style="margin-bottom:30px">The composite is exactly the alpha-composite of the foreground layer onto the background — not three independently captured videos. Six thumbnails above stand in for a slice of TriLayer's 3,908 triplets spanning diverse objects, motions and environments; click one to swap the caption (drop real per-example clips into the tiles once available).</p>
+    <p class="note" style="margin-bottom:30px">The composite is exactly the alpha-composite of the foreground layer onto the background — not three independently captured videos. Six thumbnails above stand in for a slice of TriLayer's 3,908 triplets spanning diverse objects, motions and environments; click one to swap the caption (replace each media tile's data-src with your video path).</p>
 
     <h3 style="margin-bottom:16px">Construction pipeline</h3>
     <div class="figure-slot wide" style="margin-bottom:26px">
@@ -390,40 +393,40 @@ footer{border-top:1px solid var(--line); padding:34px 0; text-align:center; colo
 
   <h3>Video Object Insertion</h3>
   <div class="thumbstrip" id="ins-thumbs">
-    <button class="thumb tile tile--src active" aria-label="Add baby" onclick="pick('ins',this,'&quot;Add baby.&quot;')"><span class="play">▶</span></button>
-    <button class="thumb tile tile--src" aria-label="Add wooden boat" onclick="pick('ins',this,'&quot;Add wooden boat.&quot;')"><span class="play">▶</span></button>
-    <button class="thumb tile tile--src" aria-label="Add dusty car" onclick="pick('ins',this,'&quot;Add dusty car.&quot;')"><span class="play">▶</span></button>
-    <button class="thumb tile tile--src" aria-label="Add dog" onclick="pick('ins',this,'&quot;Add dog.&quot;')"><span class="play">▶</span></button>
-  </div>
+      <button class="thumb tile active" data-src="assets/baseline/insert_thumb_01.jpg" aria-label="Add baby" onclick="pick('ins',this,'&quot;Add baby.&quot;')"></button>
+      <button class="thumb tile" data-src="assets/baseline/insert_thumb_02.jpg" aria-label="Add wooden boat" onclick="pick('ins',this,'&quot;Add wooden boat.&quot;')"></button>
+      <button class="thumb tile" data-src="assets/baseline/insert_thumb_03.jpg" aria-label="Add dusty car" onclick="pick('ins',this,'&quot;Add dusty car.&quot;')"></button>
+      <button class="thumb tile" data-src="assets/baseline/insert_thumb_04.jpg" aria-label="Add dog" onclick="pick('ins',this,'&quot;Add dog.&quot;')"></button>
+    </div>
   <p class="excaption" id="ins-caption">"Add baby."</p>
   <div class="cmp-row" style="margin:12px 0 8px">
     <div class="cmp-cell">
-      <div class="tile tile--src"><span class="tag">Source video</span></div>
+      <div class="tile tile--src" data-src="assets/video/source_06.mp4"><span class="tag">Source video</span></div>
       <div class="figure-slot frame"><span>🖼</span><span>Edited 1st frame E</span></div>
       <div class="name">Source video &amp; edited first frame</div>
     </div>
     <div class="cmp-cell">
-      <div class="tile tile--comp"><span class="tag">Composite</span></div>
+      <div class="tile tile--comp" data-src="assets/video/composite_12.mp4"><span class="tag">Composite</span></div>
       <div class="tile tile--na">No FG output</div>
       <div class="name">VACE-Inp</div>
     </div>
     <div class="cmp-cell">
-      <div class="tile tile--comp"><span class="tag">Composite</span></div>
+      <div class="tile tile--comp" data-src="assets/video/composite_13.mp4"><span class="tag">Composite</span></div>
       <div class="tile tile--na">No FG output</div>
       <div class="name">VACE-C</div>
     </div>
     <div class="cmp-cell">
-      <div class="tile tile--comp"><span class="tag">Composite</span></div>
-      <div class="tile tile--alpha"><span class="tag">FG layer</span></div>
+      <div class="tile tile--comp" data-src="assets/video/composite_14.mp4"><span class="tag">Composite</span></div>
+      <div class="tile tile--alpha" data-src="assets/video/foreground_12.mp4"><span class="tag">FG layer</span></div>
       <div class="name">VACE-F</div>
     </div>
     <div class="cmp-cell ours">
-      <div class="tile tile--comp"><span class="tag">Composite</span></div>
-      <div class="tile tile--alpha"><span class="tag">FG layer</span></div>
+      <div class="tile tile--comp" data-src="assets/video/composite_15.mp4"><span class="tag">Composite</span></div>
+      <div class="tile tile--alpha" data-src="assets/video/foreground_13.mp4"><span class="tag">FG layer</span></div>
       <div class="name">DBL-Insert (Ours)</div>
     </div>
   </div>
-  <p class="note" style="margin-bottom:20px">Row 1 is each method's composite output, row 2 its explicit foreground layer. VACE-Inp / VACE-C predict a composite directly and never expose a separate layer; VACE-F and DBL-Insert both learn a foreground layer, so their composite shown here is obtained by alpha-blending that layer onto the background. (Thumbnails and tiles are placeholder art until real clips are dropped in — clicking a thumbnail updates the caption/selection above.)</p>
+  <p class="note" style="margin-bottom:20px">Row 1 is each method's composite output, row 2 its explicit foreground layer. VACE-Inp / VACE-C predict a composite directly and never expose a separate layer; VACE-F and DBL-Insert both learn a foreground layer, so their composite shown here is obtained by alpha-blending that layer onto the background. (Thumbnails use image paths; media tiles use video paths — clicking a thumbnail updates the caption/selection above.)</p>
   <div class="table-wrap" style="margin-bottom:36px">
     <table>
       <tr><th>Model</th><th>ViCLIP-T↑</th><th>BG Consist.↑</th><th>Subj. Consist.↑</th><th>Motion Smooth.↑</th><th>Aesthetic↑</th><th>Imaging Qual.↑</th><th>CLIP-I↑</th><th>DINO-I↑</th></tr>
@@ -438,27 +441,27 @@ footer{border-top:1px solid var(--line); padding:34px 0; text-align:center; colo
 
   <h3>Video Layer Decomposition</h3>
   <div class="thumbstrip" id="dec-thumbs">
-    <button class="thumb tile tile--comp active" aria-label="Decompose turtle" onclick="pick('dec',this,'&quot;Decompose turtle.&quot;')"><span class="play">▶</span></button>
-    <button class="thumb tile tile--comp" aria-label="Decompose woman" onclick="pick('dec',this,'&quot;Decompose woman.&quot;')"><span class="play">▶</span></button>
-    <button class="thumb tile tile--comp" aria-label="Decompose pelican" onclick="pick('dec',this,'&quot;Decompose pelican.&quot;')"><span class="play">▶</span></button>
-    <button class="thumb tile tile--comp" aria-label="Decompose sheep" onclick="pick('dec',this,'&quot;Decompose sheep.&quot;')"><span class="play">▶</span></button>
-  </div>
+      <button class="thumb tile active" data-src="assets/baseline/decompose_thumb_01.jpg" aria-label="Decompose turtle" onclick="pick('dec',this,'&quot;Decompose turtle.&quot;')"></button>
+      <button class="thumb tile" data-src="assets/baseline/decompose_thumb_02.jpg" aria-label="Decompose woman" onclick="pick('dec',this,'&quot;Decompose woman.&quot;')"></button>
+      <button class="thumb tile" data-src="assets/baseline/decompose_thumb_03.jpg" aria-label="Decompose pelican" onclick="pick('dec',this,'&quot;Decompose pelican.&quot;')"></button>
+      <button class="thumb tile" data-src="assets/baseline/decompose_thumb_04.jpg" aria-label="Decompose sheep" onclick="pick('dec',this,'&quot;Decompose sheep.&quot;')"></button>
+    </div>
   <p class="excaption" id="dec-caption">"Decompose turtle."</p>
   <div class="cmp-row" style="margin:12px 0 8px">
-    <div class="cmp-cell"><div class="tile tile--comp"><span class="tag">Comp (input)</span></div><div class="name">Source</div></div>
+    <div class="cmp-cell"><div class="tile tile--comp" data-src="assets/video/composite_16.mp4"><span class="tag">Comp (input)</span></div><div class="name">Source</div></div>
     <div class="cmp-cell">
-      <div class="tile tile--bg"><span class="tag">Background</span></div>
-      <div class="tile tile--alpha"><span class="tag">FG layer</span></div>
+      <div class="tile tile--bg" data-src="assets/video/background_07.mp4"><span class="tag">Background</span></div>
+      <div class="tile tile--alpha" data-src="assets/video/foreground_14.mp4"><span class="tag">FG layer</span></div>
       <div class="name">Gen-Omnimatte</div>
     </div>
     <div class="cmp-cell">
-      <div class="tile tile--bg"><span class="tag">Background</span></div>
-      <div class="tile tile--alpha"><span class="tag">FG layer</span></div>
+      <div class="tile tile--bg" data-src="assets/video/background_08.mp4"><span class="tag">Background</span></div>
+      <div class="tile tile--alpha" data-src="assets/video/foreground_15.mp4"><span class="tag">FG layer</span></div>
       <div class="name">OmnimatteZero</div>
     </div>
     <div class="cmp-cell ours">
-      <div class="tile tile--bg"><span class="tag">Background</span></div>
-      <div class="tile tile--alpha"><span class="tag">FG layer</span></div>
+      <div class="tile tile--bg" data-src="assets/video/background_09.mp4"><span class="tag">Background</span></div>
+      <div class="tile tile--alpha" data-src="assets/video/foreground_16.mp4"><span class="tag">FG layer</span></div>
       <div class="name">DBL-Decompose (Ours)</div>
     </div>
   </div>
@@ -510,12 +513,12 @@ footer{border-top:1px solid var(--line); padding:34px 0; text-align:center; colo
       <p class="note" style="margin:12px 0 4px">Example 1</p>
       <div class="grid2">
         <div class="tile tile--bg" style="opacity:.65"><span class="tag">Before AGBI (residual artifacts)</span></div>
-        <div class="tile tile--bg"><span class="tag">After AGBI (refined)</span></div>
+        <div class="tile tile--bg" data-src="assets/video/background_10.mp4"><span class="tag">After AGBI (refined)</span></div>
       </div>
       <p class="note" style="margin:14px 0 4px">Example 2</p>
       <div class="grid2">
         <div class="tile tile--bg" style="opacity:.65"><span class="tag">Before AGBI (residual artifacts)</span></div>
-        <div class="tile tile--bg"><span class="tag">After AGBI (refined)</span></div>
+        <div class="tile tile--bg" data-src="assets/video/background_11.mp4"><span class="tag">After AGBI (refined)</span></div>
       </div>
     </div>
     <div class="card">
@@ -524,12 +527,12 @@ footer{border-top:1px solid var(--line); padding:34px 0; text-align:center; colo
       <p class="note" style="margin:12px 0 4px">Example 1</p>
       <div class="grid2">
         <div class="tile tile--bg" style="opacity:.65"><span class="tag">Trained w/o refined BG</span></div>
-        <div class="tile tile--bg"><span class="tag">Trained w/ refined BG</span></div>
+        <div class="tile tile--bg" data-src="assets/video/background_12.mp4"><span class="tag">Trained w/ refined BG</span></div>
       </div>
       <p class="note" style="margin:14px 0 4px">Example 2</p>
       <div class="grid2">
         <div class="tile tile--bg" style="opacity:.65"><span class="tag">Trained w/o refined BG</span></div>
-        <div class="tile tile--bg"><span class="tag">Trained w/ refined BG</span></div>
+        <div class="tile tile--bg" data-src="assets/video/background_13.mp4"><span class="tag">Trained w/ refined BG</span></div>
       </div>
       <p class="note" style="margin-top:10px">Without refined training backgrounds, DBL-Decompose tends to reproduce residual traces of the removed object; with AGBI-refined supervision, backgrounds come out cleaner with substantially fewer artifacts (full numbers in the paper's supplementary Table S7).</p>
     </div>
@@ -545,30 +548,30 @@ footer{border-top:1px solid var(--line); padding:34px 0; text-align:center; colo
 
   <h3 style="margin-bottom:14px">Video Layered Object Insertion — BG → FG + Composite</h3>
   <div class="thumbstrip" id="gal-ins-thumbs">
-    <button class="thumb tile tile--src active" aria-label="Add balloon" onclick="pick('gal-ins',this,'&quot;Add balloon.&quot;')"><span class="play">▶</span></button>
-    <button class="thumb tile tile--src" aria-label="Add bicycle" onclick="pick('gal-ins',this,'&quot;Add bicycle.&quot;')"><span class="play">▶</span></button>
-    <button class="thumb tile tile--src" aria-label="Add umbrella" onclick="pick('gal-ins',this,'&quot;Add umbrella.&quot;')"><span class="play">▶</span></button>
-  </div>
+      <button class="thumb tile active" data-src="assets/gallery/insert_thumb_01.jpg" aria-label="Add balloon" onclick="pick('gal-ins',this,'&quot;Add balloon.&quot;')"></button>
+      <button class="thumb tile" data-src="assets/gallery/insert_thumb_02.jpg" aria-label="Add bicycle" onclick="pick('gal-ins',this,'&quot;Add bicycle.&quot;')"></button>
+      <button class="thumb tile" data-src="assets/gallery/insert_thumb_03.jpg" aria-label="Add umbrella" onclick="pick('gal-ins',this,'&quot;Add umbrella.&quot;')"></button>
+    </div>
   <div class="excard" style="margin-bottom:40px">
     <div class="grid3">
-      <div class="tile tile--src"><span class="tag">BG</span></div>
-      <div class="tile tile--alpha"><span class="tag">FG</span></div>
-      <div class="tile tile--comp"><span class="tag">Comp</span></div>
+      <div class="tile tile--src" data-src="assets/video/source_07.mp4"><span class="tag">BG</span></div>
+      <div class="tile tile--alpha" data-src="assets/video/foreground_17.mp4"><span class="tag">FG</span></div>
+      <div class="tile tile--comp" data-src="assets/video/composite_17.mp4"><span class="tag">Comp</span></div>
     </div>
     <div class="excaption" id="gal-ins-caption">"Add balloon."</div>
   </div>
 
   <h3 style="margin-bottom:14px">Video Layer Decomposition — Composite → BG + FG</h3>
   <div class="thumbstrip" id="gal-dec-thumbs">
-    <button class="thumb tile tile--comp active" aria-label="Decompose kite" onclick="pick('gal-dec',this,'&quot;Decompose kite.&quot;')"><span class="play">▶</span></button>
-    <button class="thumb tile tile--comp" aria-label="Decompose surfer" onclick="pick('gal-dec',this,'&quot;Decompose surfer.&quot;')"><span class="play">▶</span></button>
-    <button class="thumb tile tile--comp" aria-label="Decompose horse" onclick="pick('gal-dec',this,'&quot;Decompose horse.&quot;')"><span class="play">▶</span></button>
-  </div>
+      <button class="thumb tile active" data-src="assets/gallery/decompose_thumb_01.jpg" aria-label="Decompose kite" onclick="pick('gal-dec',this,'&quot;Decompose kite.&quot;')"></button>
+      <button class="thumb tile" data-src="assets/gallery/decompose_thumb_02.jpg" aria-label="Decompose surfer" onclick="pick('gal-dec',this,'&quot;Decompose surfer.&quot;')"></button>
+      <button class="thumb tile" data-src="assets/gallery/decompose_thumb_03.jpg" aria-label="Decompose horse" onclick="pick('gal-dec',this,'&quot;Decompose horse.&quot;')"></button>
+    </div>
   <div class="excard">
     <div class="grid3">
-      <div class="tile tile--comp"><span class="tag">Comp</span></div>
-      <div class="tile tile--bg"><span class="tag">BG</span></div>
-      <div class="tile tile--alpha"><span class="tag">FG</span></div>
+      <div class="tile tile--comp" data-src="assets/video/composite_18.mp4"><span class="tag">Comp</span></div>
+      <div class="tile tile--bg" data-src="assets/video/background_14.mp4"><span class="tag">BG</span></div>
+      <div class="tile tile--alpha" data-src="assets/video/foreground_18.mp4"><span class="tag">FG</span></div>
     </div>
     <div class="excaption" id="gal-dec-caption">"Decompose kite."</div>
   </div>
@@ -579,22 +582,54 @@ footer{border-top:1px solid var(--line); padding:34px 0; text-align:center; colo
     <div class="eyebrow">08 — Cite this work</div>
     <h2>BibTeX</h2>
   </div>
-  <pre>@inproceedings{han2026explicitlayer,
+  <pre>@inproceedings{anonymous2027dbldiffusion,
   title     = {Explicit Layer Modeling for Video Object Insertion and Video Layer Decomposition},
-  author    = {Han, kyujin and Shin, seungjoo and Cho, sunghyun},
-  journal   = {arXiv},
-  year      = {2026},
+  author    = {Anonymous Authors},
+  booktitle = {Submitted to the International Conference on Learning Representations (ICLR)},
+  year      = {2027},
+  note      = {Under double-blind review}
 }</pre>
 </section>
 
 <footer>
   <div class="wrap">
-    <p>DBL-Diffusion · TriLayer Dataset · arXiv</p>
-    <p class="abbrv">Explicit Layer Modeling for Video Object Insertion and Video Layer Decomposition</p>
+    <p>DBL-Diffusion · TriLayer Dataset · Paper under double-blind review, ICLR 2027</p>
+    <p class="abbrv">Page layout inspired by academic project-page conventions. Media tiles are placeholders — swap in real clips/images before publishing publicly.</p>
   </div>
 </footer>
 
 <script>
+/*
+  MEDIA: change only data-src to your file path.
+  Video extensions (.mp4/.webm/.ogg) are mounted as autoplay/muted/loop video.
+  Image extensions (.jpg/.jpeg/.png/.webp/.gif) are mounted as images.
+*/
+const VIDEO_EXT = /\.(mp4|webm|ogg)(?:[?#].*)?$/i;
+
+function mountMedia(el){
+  const src = (el.dataset.src || '').trim();
+  if(!src || el.dataset.mediaMounted === 'true') return;
+  const media = VIDEO_EXT.test(src) ? document.createElement('video') : document.createElement('img');
+  media.className = 'media-element';
+  media.src = src;
+  if(media.tagName === 'VIDEO'){
+    media.autoplay = true;
+    media.muted = true;
+    media.loop = true;
+    media.playsInline = true;
+    media.setAttribute('aria-label', 'Video media');
+    media.addEventListener('loadedmetadata', () => media.play().catch(() => {}), {once:true});
+  } else {
+    media.alt = el.getAttribute('aria-label') || '';
+  }
+  el.prepend(media);
+  el.dataset.mediaMounted = 'true';
+}
+
+function hydrateMedia(){
+  document.querySelectorAll('[data-src]').forEach(mountMedia);
+}
+
 function pick(group, el, text){
   var strip = el.parentElement;
   var thumbs = strip.querySelectorAll('.thumb');
@@ -603,6 +638,8 @@ function pick(group, el, text){
   var cap = document.getElementById(group+'-caption');
   if(cap){ cap.textContent = text.replace(/&quot;/g,'"'); }
 }
+
+document.addEventListener('DOMContentLoaded', hydrateMedia);
 </script>
 </body>
 </html>
