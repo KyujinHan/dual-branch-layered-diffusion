@@ -47,14 +47,17 @@ nav.top .wrap{display:flex; align-items:center; justify-content:space-between; h
 
 .hero{padding:88px 0 44px; text-align:center}
 .hero h1{font-size:clamp(2.4rem,6vw,4rem); background:linear-gradient(120deg,var(--ink) 35%,var(--green) 105%); -webkit-background-clip:text; background-clip:text; color:transparent}
-.hero .sub{max-width:680px; margin:18px auto 0; font-size:1.12rem; color:var(--muted)}
+.hero .sub{max-width:1120px; margin:18px auto 0; font-size:clamp(.92rem,1.35vw,1.06rem); color:var(--muted)}
+.hero .sub .sub-line{display:block; white-space:nowrap}
+.hero .sub .sub-line + .sub-line{margin-top:2px}
 .authors{margin:22px 0 6px; font-size:.95rem; color:var(--muted)}
 .venue{font-size:.85rem; color:var(--muted); margin-bottom:26px}
-.btnrow{display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-bottom:8px}
-.btn{border:1px solid rgba(255,255,255,.08); background:rgba(29,37,46,.78); color:var(--ink); padding:.62rem 1.12rem; border-radius:999px; text-decoration:none; font-size:.88rem; font-weight:500; box-shadow:0 6px 18px rgba(0,0,0,.12); transition:transform .18s ease, border-color .18s ease, background .18s ease}
-.btn:hover{transform:translateY(-1px); border-color:rgba(70,227,154,.35); background:rgba(34,44,54,.92)}
+.btnrow{display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-bottom:8px}
+.btn{border:1px solid rgba(92,242,173,.42); background:linear-gradient(135deg,#35D98A,#19B96E); color:#06130C; padding:.66rem 1.15rem; border-radius:999px; text-decoration:none; font-size:.88rem; font-weight:650; box-shadow:0 7px 20px rgba(34,214,135,.18), inset 0 1px 0 rgba(255,255,255,.18); transition:transform .18s ease, filter .18s ease, box-shadow .18s ease}
+.btn:hover{transform:translateY(-1px); filter:saturate(1.16) brightness(1.05); box-shadow:0 10px 26px rgba(34,214,135,.26), inset 0 1px 0 rgba(255,255,255,.2)}
 .btn[aria-disabled="true"]{opacity:.55; cursor:not-allowed}
-.btn.primary{background:linear-gradient(135deg,#5AF0A9,#3ED38E); color:#08150F; border-color:rgba(255,255,255,.18); font-weight:600; box-shadow:0 8px 24px rgba(70,227,154,.16)}
+.btn.primary{background:linear-gradient(135deg,#63F6B0,#27D17E); color:#041009; border-color:rgba(255,255,255,.3); font-weight:700; box-shadow:0 10px 28px rgba(70,227,154,.24)}
+@media (max-width:760px){.hero .sub{max-width:680px}.hero .sub .sub-line{white-space:normal}}
 .note{font-size:.8rem; color:var(--muted); margin-top:6px}
 
 .flowgrid{display:grid; grid-template-columns:1fr 64px 1fr; grid-template-rows:auto auto; column-gap:18px; row-gap:8px; align-items:center; margin-top:8px}
@@ -71,6 +74,7 @@ nav.top .wrap{display:flex; align-items:center; justify-content:space-between; h
 .method-figure{margin:26px 0 8px}
 .method-figure .figure-slot{aspect-ratio:16/7; border-radius:18px; background:repeating-linear-gradient(135deg,rgba(23,29,36,.92),rgba(23,29,36,.92) 10px,rgba(29,36,44,.92) 10px,rgba(29,36,44,.92) 20px); box-shadow:0 16px 40px rgba(0,0,0,.12)}
 .method-figure .figure-slot span:last-child{max-width:720px}
+.method-figure-img{display:block; width:100%; height:auto; max-height:620px; object-fit:contain; border-radius:18px; border:1px solid rgba(255,255,255,.075); box-shadow:0 16px 40px rgba(0,0,0,.12)}
 @media (max-width:720px){.flowgrid{grid-template-columns:1fr; grid-template-rows:auto auto auto auto; row-gap:10px}.flowhead--left{grid-column:1; grid-row:1}.flowhead--right{display:none}.flowbody--left{grid-column:1; grid-row:2}.flowarrow{grid-column:1; grid-row:3; transform:none}.flowbody--right{grid-column:1; grid-row:4}}
 
 .tile{aspect-ratio:16/9; border-radius:10px; position:relative; overflow:hidden; display:flex; align-items:flex-end; box-shadow:var(--shadow); border:1px solid rgba(255,255,255,.045)}
@@ -172,13 +176,16 @@ footer{border-top:1px solid var(--line); padding:34px 0; text-align:center; colo
 <header class="hero wrap">
   <div class="eyebrow">Under review — ICLR 2027</div>
   <h1>DBL-Diffusion</h1>
-  <p class="sub">Explicit Layer Modeling for Video Object Insertion and Video Layer Decomposition — a dual-branch diffusion framework that jointly generates RGB scene content and RGBA foreground layers.</p>
+  <p class="sub"><span class="sub-line">Explicit Layer Modeling for Video Object Insertion and Video Layer Decomposition</span><span class="sub-line">a dual-branch diffusion framework that jointly generates RGB scene content and RGBA foreground layers.</span></p>
   <div class="authors">Anonymous Authors</div>
   <div class="venue">Paper under double-blind review · anonymized for review</div>
   <div class="btnrow">
-    <a class="btn primary" aria-disabled="true">Paper PDF</a>
-    <a class="btn" aria-disabled="true">Code</a>
-    <a class="btn" aria-disabled="true">TriLayer Dataset</a>
+    <!-- Replace each href with your actual resource URL. -->
+    <a class="btn primary" href="#">Paper PDF</a>
+    <a class="btn" href="#">Code</a>
+    <a class="btn" href="#">TriLayer Dataset</a>
+    <a class="btn" href="#">Weights</a>
+    <a class="btn" href="#">Supple. Video</a>
   </div>
   <div class="note">Links will be released upon acceptance, in accordance with double-blind review.</div>
 </header>
@@ -361,6 +368,7 @@ footer{border-top:1px solid var(--line); padding:34px 0; text-align:center; colo
     <div class="archbox rgba"><div class="lab">RGBA Branch</div><h3>VACE + DoRA</h3><p class="note" style="margin:6px 0 0">Out-of-domain: predicts the RGBA foreground layer using the WAN-alpha VAE (transparency, alpha mattes).</p></div>
   </div>
   <div class="method-figure">
+    <!-- Replace the figure-slot below with: <img class="method-figure-img" src="assets/model_figure.png" alt="DBL-Diffusion architecture"> -->
     <div class="figure-slot wide">
       <span style="font-size:1.35rem">🖼</span>
       <span>Model figure PNG — replace this placeholder with the DBL-Diffusion architecture figure</span>
