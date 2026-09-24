@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DBL-Diffusion — Explicit Layer Modeling for Video Insertion &amp; Decomposition</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#0F1317; --card:#1A2027; --card2:#151A20; --ink:#EAEDE8; --muted:#8B9690; --line:#262E34;
+  --green:#2ED988; --greenL:rgba(46,217,136,.12); --amber:#F0B84D; --amberL:rgba(240,184,77,.12);
+  --shadow:0 1px 2px rgba(0,0,0,.45);
+  --serif:'Fraunces',Georgia,serif; --sans:'Inter',system-ui,-apple-system,sans-serif; --mono:'IBM Plex Mono',monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth; scroll-padding-top:76px}
+body{margin:0; font-family:var(--sans); color:var(--ink); background:var(--bg); line-height:1.6; -webkit-font-smoothing:antialiased}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --bg:#0F1317; --card:#1A2027; --ink:#EAEDE8; --line:#262E34; } }
+:root[data-theme="dark"]{ --bg:#0F1317; --card:#1A2027; --ink:#EAEDE8; --line:#262E34; }
+img,svg{max-width:100%}
+.wrap{max-width:1120px; margin:0 auto; padding:0 24px}
+h1,h2,h3{font-family:var(--serif); font-weight:600; letter-spacing:-.01em; margin:0}
+h2{font-size:clamp(1.6rem,3vw,2.2rem)}
+h3{font-size:1.15rem}
+p{margin:0 0 1em}
+a{color:var(--green)}
+.eyebrow{font-family:var(--mono); font-size:.7rem; letter-spacing:.06em; text-transform:uppercase; color:var(--green); margin-bottom:.6rem}
+.muted{color:var(--muted)}
+.section{padding:68px 0}
+.section-head{max-width:640px; margin-bottom:34px}
+.section-head p{color:var(--muted); font-size:1.02rem}
+
+nav.top{position:sticky; top:0; z-index:20; background:rgba(15,19,23,.86); backdrop-filter:blur(10px); border-bottom:1px solid var(--line); padding-top:env(safe-area-inset-top,0px)}
+nav.top .wrap{display:flex; align-items:center; justify-content:space-between; height:60px; gap:16px}
+.brand{font-family:var(--serif); font-weight:600; font-size:1.05rem; white-space:nowrap}
+.navlinks{display:flex; gap:20px; overflow-x:auto; scrollbar-width:none; font-size:.86rem}
+.navlinks::-webkit-scrollbar{display:none}
+.navlinks a{color:var(--ink); text-decoration:none; white-space:nowrap; opacity:.7}
+.navlinks a:hover{opacity:1; color:var(--green)}
+
+.hero{padding:76px 0 40px; text-align:center}
+.hero h1{font-size:clamp(2.4rem,6vw,4rem); background:linear-gradient(120deg,var(--ink) 35%,var(--green) 105%); -webkit-background-clip:text; background-clip:text; color:transparent}
+.hero .sub{max-width:680px; margin:18px auto 0; font-size:1.12rem; color:var(--muted)}
+.authors{margin:22px 0 6px; font-size:.95rem; color:var(--muted)}
+.venue{font-size:.85rem; color:var(--muted); margin-bottom:26px}
+.btnrow{display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-bottom:8px}
+.btn{border:1px solid var(--line); background:var(--card); color:var(--ink); padding:.6rem 1.1rem; border-radius:999px; text-decoration:none; font-size:.88rem; font-weight:500; box-shadow:var(--shadow)}
+.btn[aria-disabled="true"]{opacity:.55; cursor:not-allowed}
+.btn.primary{background:var(--green); color:#08150F; border-color:var(--green); font-weight:600}
+.note{font-size:.8rem; color:var(--muted); margin-top:6px}
+
+.flowgrid{display:grid; grid-template-columns:1fr auto 1fr; gap:18px; align-items:center; margin-top:8px}
+.flowcol{display:flex; flex-direction:column; gap:10px}
+.flowarrow{font-family:var(--serif); font-size:1.4rem; color:var(--muted); text-align:center}
+.tasklabel{font-family:var(--mono); font-size:.68rem; letter-spacing:.04em; text-transform:uppercase; padding:.3rem .7rem; border-radius:999px; display:inline-block; margin-bottom:4px}
+.tasklabel.ins{background:var(--amberL); color:var(--amber)}
+.tasklabel.dec{background:var(--greenL); color:var(--green)}
+@media (max-width:720px){.flowgrid{grid-template-columns:1fr}.flowarrow{transform:rotate(90deg)}}
+
+.tile{aspect-ratio:16/9; border-radius:10px; position:relative; overflow:hidden; display:flex; align-items:flex-end; box-shadow:var(--shadow)}
+.tile .tag{font-family:var(--mono); font-size:.62rem; letter-spacing:.02em; color:#fff; background:rgba(0,0,0,.45); padding:.25rem .5rem; border-radius:6px; margin:.45rem}
+.tile .play{position:absolute; top:.5rem; right:.5rem; width:20px; height:20px; border-radius:50%; background:rgba(255,255,255,.85); display:flex; align-items:center; justify-content:center; font-size:.6rem; color:#111}
+.tile--comp{background:linear-gradient(135deg,#232a30,#12161a)}
+.tile--bg{background:linear-gradient(135deg,#173129,#0e1c1a)}
+.tile--src{background:linear-gradient(135deg,#2a323a,#151a1f)}
+.tile--alpha{background:linear-gradient(135deg,#2FE68B,#149A5A)}
+.tile--alpha .tag{background:rgba(6,20,12,.55)}
+.grid3{display:grid; grid-template-columns:repeat(3,1fr); gap:10px}
+.grid2{display:grid; grid-template-columns:repeat(2,1fr); gap:10px}
+
+.panel{background:var(--card); border:1px solid var(--line); border-radius:20px; padding:44px clamp(20px,5vw,56px)}
+
+.exgrid{display:grid; grid-template-columns:1fr; gap:28px}
+.excard{background:var(--card2); border:1px solid var(--line); border-radius:14px; padding:16px; box-shadow:var(--shadow)}
+.excaption{font-size:.85rem; margin:10px 2px 0; font-style:italic; color:var(--muted)}
+
+.thumbstrip{display:flex; gap:10px; overflow-x:auto; padding:4px 0 14px}
+.thumb{flex:0 0 auto; width:112px; border:2px solid transparent; padding:0; background:none; cursor:pointer; transition:border-color .15s}
+.thumb.active{border-color:var(--green)}
+.thumb:hover{border-color:var(--line)}
+
+.cmp-row{display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:10px; margin-bottom:8px}
+.cmp-cell{display:flex; flex-direction:column; gap:8px; text-align:center}
+.cmp-cell .name{font-size:.74rem; margin-top:2px; color:var(--muted)}
+.cmp-cell.ours .name{color:var(--green); font-weight:600}
+.cmp-cell.ours .tile{outline:2px solid var(--green); outline-offset:2px}
+.tile--na{align-items:center; justify-content:center; background:repeating-linear-gradient(135deg,var(--card2),var(--card2) 8px,#20272e 8px,#20272e 16px); border:1px dashed var(--line); box-shadow:none; color:var(--muted); font-family:var(--mono); font-size:.6rem; text-align:center; padding:4px}
+
+.figure-slot{border:1px dashed var(--line); border-radius:16px; background:repeating-linear-gradient(135deg,var(--card2),var(--card2) 10px,#1c222a 10px,#1c222a 20px); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; color:var(--muted); font-family:var(--mono); font-size:.78rem; text-align:center; padding:20px}
+.figure-slot .playbig{width:54px; height:54px; border-radius:50%; background:var(--green); color:#08150F; display:flex; align-items:center; justify-content:center; font-size:1rem}
+.figure-slot.teaser{aspect-ratio:21/9}
+.figure-slot.wide{aspect-ratio:16/6}
+.figure-slot.frame{aspect-ratio:16/9; font-size:.62rem; padding:8px; gap:4px}
+.eqn-card{background:var(--card2); border:1px solid var(--line); border-radius:14px; padding:22px 24px; margin-top:24px}
+.eqn{font-family:var(--mono); font-size:1.05rem; text-align:center; letter-spacing:.02em}
+.eqn-note{font-size:.8rem; color:var(--muted); margin:12px auto 0; text-align:center; max-width:680px}
+.accent{color:var(--green); font-weight:600}
+
+.table-wrap{overflow-x:auto; border:1px solid var(--line); border-radius:14px; background:var(--card2)}
+table{border-collapse:collapse; width:100%; font-size:.82rem; min-width:640px}
+th,td{padding:.6rem .7rem; text-align:center; border-bottom:1px solid var(--line); white-space:nowrap}
+th{font-weight:600; color:var(--muted); font-size:.7rem; text-transform:uppercase; letter-spacing:.03em; font-family:var(--mono)}
+td:first-child,th:first-child{text-align:left; white-space:normal}
+tr.hl td{background:var(--greenL); font-weight:600}
+tr.hl td:first-child{color:var(--green)}
+tr:last-child td{border-bottom:none}
+.cell-check{color:var(--green)} .cell-x{color:var(--muted); opacity:.5}
+
+.steps{display:flex; gap:0; overflow-x:auto; padding:6px 0}
+.step{flex:0 0 auto; min-width:120px; padding:0 14px; text-align:center; position:relative}
+.step .num{width:28px; height:28px; border-radius:50%; background:var(--ink); color:var(--bg); font-size:.75rem; display:flex; align-items:center; justify-content:center; margin:0 auto 8px}
+.step .t{font-size:.78rem; font-weight:600}
+.step .n{font-family:var(--mono); font-size:.72rem; color:var(--green)}
+.step:not(:last-child)::after{content:"→"; position:absolute; right:-6px; top:14px; color:var(--muted)}
+
+.triplet{display:grid; grid-template-columns:repeat(3,1fr); gap:10px}
+
+.card{background:var(--card2); border:1px solid var(--line); border-radius:14px; padding:22px; box-shadow:var(--shadow)}
+.two-col{display:grid; grid-template-columns:1fr 1fr; gap:22px}
+@media (max-width:760px){.two-col{grid-template-columns:1fr}}
+
+.archgrid{display:grid; grid-template-columns:1fr auto 1fr; gap:16px; align-items:center; margin:20px 0}
+.archbox{background:var(--card2); border:1px solid var(--line); border-radius:14px; padding:18px; text-align:center}
+.archbox .lab{font-family:var(--mono); font-size:.68rem; color:var(--amber); letter-spacing:.03em; margin-bottom:6px}
+.archbox.rgba .lab{color:var(--green)}
+.archarrow{font-size:1.6rem; color:var(--green); text-align:center; font-family:var(--mono)}
+@media (max-width:700px){.archgrid{grid-template-columns:1fr} .archarrow{transform:rotate(90deg)}}
+.principles{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:20px}
+@media (max-width:760px){.principles{grid-template-columns:1fr}}
+.principles .card h3{font-size:.95rem; margin-bottom:6px}
+.principles .card p{font-size:.85rem; margin:0}
+
+pre{background:#080B0D; color:var(--ink); border:1px solid var(--line); padding:16px; border-radius:10px; overflow-x:auto; font-size:.78rem; font-family:var(--mono)}
+footer{border-top:1px solid var(--line); padding:34px 0; text-align:center; color:var(--muted); font-size:.82rem}
+.abbrv{font-size:.75rem; letter-spacing:.02em; color:var(--muted)}
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <div class="wrap">
+    <div class="brand">DBL-Diffusion</div>
+    <div class="navlinks">
+      <a href="#overview">Overview</a>
+      <a href="#results">Qualitative Results</a>
+      <a href="#dataset">TriLayer Dataset</a>
+      <a href="#method">Method</a>
+      <a href="#comparison">Comparisons</a>
+      <a href="#ablation">Ablations</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#bibtex">BibTeX</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero wrap">
+  <div class="eyebrow">Under review — ICLR 2027</div>
+  <h1>DBL-Diffusion</h1>
+  <p class="sub">Explicit Layer Modeling for Video Object Insertion and Video Layer Decomposition — a dual-branch diffusion framework that jointly generates RGB scene content and RGBA foreground layers.</p>
+  <div class="authors">Anonymous Authors</div>
+  <div class="venue">Paper under double-blind review · anonymized for review</div>
+  <div class="btnrow">
+    <a class="btn primary" aria-disabled="true">Paper PDF</a>
+    <a class="btn" aria-disabled="true">Code</a>
+    <a class="btn" aria-disabled="true">TriLayer Dataset</a>
+  </div>
+  <div class="note">Links will be released upon acceptance, in accordance with double-blind review.</div>
+</header>
+
+<div class="wrap" style="padding-bottom:8px">
+  <div class="figure-slot teaser">
+    <span class="playbig">▶</span>
+    <span>Teaser video — drop the project video in here (16:9 or 21:9, autoplay/muted loop)</span>
+  </div>
+</div>
+
+<section id="overview" class="section wrap">
+  <div class="section-head">
+    <div class="eyebrow">01 — Two tasks, one backbone</div>
+    <h2>One dual-branch model, two layered video tasks</h2>
+    <p>DBL-Diffusion runs an RGB branch and an RGBA branch side by side, exchanging information at every denoising step through joint cross-attention. The same backbone instantiates two tasks that were previously trained without any direct layer supervision.</p>
+  </div>
+  <div class="flowgrid">
+    <div class="flowcol">
+      <span class="tasklabel ins">DBL-Insert</span>
+      <div class="grid2">
+        <div class="tile tile--src"><span class="tag">BG video (input)</span><span class="play">▶</span></div>
+        <div class="figure-slot frame"><span>🖼</span><span>Edited 1st frame E</span></div>
+      </div>
+    </div>
+    <div class="flowarrow">→</div>
+    <div class="flowcol">
+      <div class="grid2">
+        <div class="tile tile--alpha"><span class="tag">FG layer (RGBA)</span></div>
+        <div class="tile tile--comp"><span class="tag">Composite</span><span class="play">▶</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="eqn-card">
+    <div class="eqn">V<sub>out</sub> = <span class="accent">α</span> ⊙ V<sub>F</sub><sup>rgb</sup> + (1 − <span class="accent">α</span>) ⊙ V<sub>B</sub></div>
+    <p class="eqn-note">(V<sub>F</sub><sup>rgb</sup>, <span class="accent">α</span>) = V<sub>F</sub> — the predicted RGBA foreground layer, split into its RGB and alpha channels. V<sub>B</sub> is the input background video and ⊙ is elementwise multiplication. The RGB branch's own composite prediction V<sub>C</sub> is only an auxiliary signal during denoising — the final result alpha-blends V<sub>F</sub> directly onto V<sub>B</sub>, which is why DBL-Insert stays robust to minor inconsistencies in V<sub>C</sub>.</p>
+  </div>
+  <div class="flowgrid" style="margin-top:28px">
+    <div class="flowcol">
+      <span class="tasklabel dec">DBL-Decompose</span>
+      <div class="grid2"><div class="tile tile--comp"><span class="tag">Composite (input)</span><span class="play">▶</span></div></div>
+    </div>
+    <div class="flowarrow">→</div>
+    <div class="flowcol">
+      <div class="grid2">
+        <div class="tile tile--bg"><span class="tag">BG video</span><span class="play">▶</span></div>
+        <div class="tile tile--alpha"><span class="tag">FG layer (RGBA)</span></div>
+      </div>
+    </div>
+  </div>
+  <p class="note" style="margin-top:18px">Green tiles denote the explicit RGBA foreground layer — pulled the way a compositor keys a matte against a green screen. It carries both the object and the effects it induces (shadows, reflections). Tiles above are layout placeholders standing in for result clips.</p>
+</section>
+
+<section id="results" class="section wrap">
+  <div class="panel">
+    <div class="section-head">
+      <div class="eyebrow">02 — Qualitative results</div>
+      <h2>General performance, before any baseline comparison</h2>
+      <p>Each row shows the model input on the left and the two DBL-Diffusion outputs on the right — no cherry-picked side-by-side yet, just what the model produces.</p>
+    </div>
+
+    <h3 style="margin-bottom:14px">Video Layered Object Insertion — BG → FG + Composite</h3>
+    <div class="exgrid" style="margin-bottom:40px">
+      <div class="excard"><div class="grid3">
+        <div class="tile tile--src"><span class="tag">BG</span></div>
+        <div class="tile tile--alpha"><span class="tag">FG</span></div>
+        <div class="tile tile--comp"><span class="tag">Comp</span></div>
+      </div><div class="excaption">"Add baby."</div></div>
+      <div class="excard"><div class="grid3">
+        <div class="tile tile--src"><span class="tag">BG</span></div>
+        <div class="tile tile--alpha"><span class="tag">FG</span></div>
+        <div class="tile tile--comp"><span class="tag">Comp</span></div>
+      </div><div class="excaption">"Add wooden boat."</div></div>
+      <div class="excard"><div class="grid3">
+        <div class="tile tile--src"><span class="tag">BG</span></div>
+        <div class="tile tile--alpha"><span class="tag">FG</span></div>
+        <div class="tile tile--comp"><span class="tag">Comp</span></div>
+      </div><div class="excaption">"Add dusty car."</div></div>
+      <div class="excard"><div class="grid3">
+        <div class="tile tile--src"><span class="tag">BG</span></div>
+        <div class="tile tile--alpha"><span class="tag">FG</span></div>
+        <div class="tile tile--comp"><span class="tag">Comp</span></div>
+      </div><div class="excaption">"Add dog."</div></div>
+    </div>
+
+    <h3 style="margin-bottom:14px">Video Layer Decomposition — Composite → BG + FG</h3>
+    <div class="exgrid">
+      <div class="excard"><div class="grid3">
+        <div class="tile tile--comp"><span class="tag">Comp</span></div>
+        <div class="tile tile--bg"><span class="tag">BG</span></div>
+        <div class="tile tile--alpha"><span class="tag">FG</span></div>
+      </div><div class="excaption">"Decompose turtle."</div></div>
+      <div class="excard"><div class="grid3">
+        <div class="tile tile--comp"><span class="tag">Comp</span></div>
+        <div class="tile tile--bg"><span class="tag">BG</span></div>
+        <div class="tile tile--alpha"><span class="tag">FG</span></div>
+      </div><div class="excaption">"Decompose woman."</div></div>
+      <div class="excard"><div class="grid3">
+        <div class="tile tile--comp"><span class="tag">Comp</span></div>
+        <div class="tile tile--bg"><span class="tag">BG</span></div>
+        <div class="tile tile--alpha"><span class="tag">FG</span></div>
+      </div><div class="excaption">"Decompose pelican."</div></div>
+      <div class="excard"><div class="grid3">
+        <div class="tile tile--comp"><span class="tag">Comp</span></div>
+        <div class="tile tile--bg"><span class="tag">BG</span></div>
+        <div class="tile tile--alpha"><span class="tag">FG</span></div>
+      </div><div class="excaption">"Decompose sheep."</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="dataset" class="section wrap">
+  <div class="panel">
+    <div class="section-head">
+      <div class="eyebrow">03 — TriLayer dataset</div>
+      <h2>3,908 aligned composite–background–foreground triplets</h2>
+      <p>The bottleneck for both tasks is the same: no existing dataset provides direct supervision for a foreground layer that includes object-induced effects. TriLayer fills that gap.</p>
+    </div>
+
+    <div class="thumbstrip" id="tri-thumbs">
+      <button class="thumb tile tile--comp active" aria-label="Dog on the beach" onclick="pick('tri',this,'Dog running on the beach')"><span class="play">▶</span></button>
+      <button class="thumb tile tile--comp" aria-label="Cyclist in the city" onclick="pick('tri',this,'Cyclist riding through the city')"><span class="play">▶</span></button>
+      <button class="thumb tile tile--comp" aria-label="Kayak on the river" onclick="pick('tri',this,'Kayak paddling down the river')"><span class="play">▶</span></button>
+      <button class="thumb tile tile--comp" aria-label="Skateboarder at the park" onclick="pick('tri',this,'Skateboarder at the park')"><span class="play">▶</span></button>
+      <button class="thumb tile tile--comp" aria-label="Person with an umbrella" onclick="pick('tri',this,'Pedestrian with an umbrella')"><span class="play">▶</span></button>
+      <button class="thumb tile tile--comp" aria-label="Horse rider on the trail" onclick="pick('tri',this,'Horse and rider on a forest trail')"><span class="play">▶</span></button>
+    </div>
+    <p class="excaption" id="tri-caption">Dog running on the beach</p>
+    <div class="triplet" style="margin-bottom:10px">
+      <div class="tile tile--comp"><span class="tag">Composite</span><span class="play">▶</span></div>
+      <div class="tile tile--bg"><span class="tag">Background</span><span class="play">▶</span></div>
+      <div class="tile tile--alpha"><span class="tag">Foreground (RGBA)</span></div>
+    </div>
+    <p class="note" style="margin-bottom:30px">The composite is exactly the alpha-composite of the foreground layer onto the background — not three independently captured videos. Six thumbnails above stand in for a slice of TriLayer's 3,908 triplets spanning diverse objects, motions and environments; click one to swap the caption (drop real per-example clips into the tiles once available).</p>
+
+    <h3 style="margin-bottom:16px">Construction pipeline</h3>
+    <div class="figure-slot wide" style="margin-bottom:26px">
+      <span style="font-size:1.3rem">🖼</span>
+      <span>Fig. 1 — TriLayer construction pipeline (drop the paper figure in here)</span>
+    </div>
+    <p class="note" style="margin-bottom:8px">Stage-by-stage clip counts</p>
+    <div class="steps" style="margin-bottom:12px">
+      <div class="step"><div class="num">1</div><div class="t">Video database</div><div class="n">18,000</div></div>
+      <div class="step"><div class="num">2</div><div class="t">Preprocess &amp; shot filter</div><div class="n">18,000</div></div>
+      <div class="step"><div class="num">3</div><div class="t">VLM filtering</div><div class="n">9,178</div></div>
+      <div class="step"><div class="num">4</div><div class="t">Object mask gen.</div><div class="n">9,178</div></div>
+      <div class="step"><div class="num">5</div><div class="t">BG layer by removal</div><div class="n">5,492</div></div>
+      <div class="step"><div class="num">6</div><div class="t">FG layer + alpha</div><div class="n">4,956</div></div>
+      <div class="step"><div class="num">7</div><div class="t">BG refinement (AGBI)</div><div class="n">3,908</div></div>
+    </div>
+    <p class="note" style="margin-bottom:30px">Human verification rounds sit between stages 3–4, 5, 6 and 7, narrowing raw Pexels clips down to 3,908 high-quality triplets with a VLM-generated object-centric caption for each.</p>
+
+    <h3 style="margin-bottom:10px">TriLayer vs. existing datasets</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Dataset</th><th>Composite</th><th>BG (FX removed)</th><th>0/1 Mask</th><th>Alpha matte</th><th>Alpha (FX incl.)</th><th>Dynamic obj.</th><th>Real-world</th><th># Frames</th></tr>
+        <tr><td>DVM</td><td class="cell-check">✓</td><td class="cell-x">✗</td><td class="cell-x">✗</td><td class="cell-check">✓</td><td class="cell-x">✗</td><td class="cell-check">✓</td><td class="cell-check">✓</td><td>81&lt;</td></tr>
+        <tr><td>VideoMatting108</td><td class="cell-check">✓</td><td class="cell-x">✗</td><td class="cell-x">✗</td><td class="cell-check">✓</td><td class="cell-x">✗</td><td class="cell-check">✓</td><td class="cell-check">✓</td><td>81&lt;</td></tr>
+        <tr><td>VideoMatte240K</td><td class="cell-check">✓</td><td class="cell-x">✗</td><td class="cell-x">✗</td><td class="cell-check">✓</td><td class="cell-x">✗</td><td class="cell-check">✓</td><td class="cell-check">✓</td><td>81&lt;</td></tr>
+        <tr><td>Senorita-2M</td><td class="cell-check">✓</td><td class="cell-x">✗</td><td class="cell-check">✓</td><td class="cell-x">✗</td><td class="cell-x">✗</td><td class="cell-check">✓</td><td class="cell-check">✓</td><td>33~64</td></tr>
+        <tr><td>VPData</td><td class="cell-check">✓</td><td class="cell-x">✗</td><td class="cell-check">✓</td><td class="cell-x">✗</td><td class="cell-x">✗</td><td class="cell-check">✓</td><td class="cell-check">✓</td><td>81&lt;</td></tr>
+        <tr><td>ROSE++</td><td class="cell-check">✓</td><td class="cell-check">✓</td><td class="cell-check">✓</td><td class="cell-x">✗</td><td class="cell-x">✗</td><td class="cell-x">✗</td><td class="cell-x">✗</td><td>81&lt;</td></tr>
+        <tr class="hl"><td>TriLayer (Ours)</td><td class="cell-check">✓</td><td class="cell-check">✓</td><td class="cell-check">✓</td><td class="cell-check">✓</td><td class="cell-check">✓</td><td class="cell-check">✓</td><td class="cell-check">✓</td><td>81</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="method" class="section wrap">
+  <div class="section-head">
+    <div class="eyebrow">04 — Architecture</div>
+    <h2>A dual-branch diffusion backbone</h2>
+    <p>Both tasks reuse the same VACE-based backbone, split into an RGB branch and an RGBA branch that talk to each other at every transformer block.</p>
+  </div>
+  <div class="archgrid">
+    <div class="archbox rgb"><div class="lab">RGB Branch</div><h3>VACE + LoRA</h3><p class="note" style="margin:6px 0 0">In-domain: predicts RGB video within the pretrained latent space (scene-level composite / clean background).</p></div>
+    <div class="archarrow">⇄</div>
+    <div class="archbox rgba"><div class="lab">RGBA Branch</div><h3>VACE + DoRA</h3><p class="note" style="margin:6px 0 0">Out-of-domain: predicts the RGBA foreground layer using the WAN-alpha VAE (transparency, alpha mattes).</p></div>
+  </div>
+  <div class="principles">
+    <div class="card"><h3>Joint cross-attention</h3><p class="muted">Every block lets the RGB branch attend to RGBA features and vice versa, so the composite reflects the foreground layer's geometry while the layer inherits scene-dependent lighting and occlusion.</p></div>
+    <div class="card"><h3>LoRA–DoRA hybrid</h3><p class="muted">LoRA keeps the RGB branch close to its pretrained prior; DoRA's decoupled magnitude/direction update gives the RGBA branch room to learn transparency.</p></div>
+    <div class="card"><h3>Disentangled timestep sampling</h3><p class="muted">Each branch's noise level is controlled independently, which also enables conditional edits — e.g. freezing the RGBA branch at low noise to edit a foreground layer while keeping the background fixed.</p></div>
+  </div>
+</section>
+
+<section id="comparison" class="section wrap">
+  <div class="section-head">
+    <div class="eyebrow">05 — Baseline comparison</div>
+    <h2>How DBL-Diffusion stacks up against prior methods</h2>
+    <p>On <em>LayeredVid-Benchmark</em> (65 videos) for insertion, and the Movie / Kubric benchmarks for decomposition. Pick an example below.</p>
+  </div>
+
+  <h3>Video Object Insertion</h3>
+  <div class="thumbstrip" id="ins-thumbs">
+    <button class="thumb tile tile--src active" aria-label="Add baby" onclick="pick('ins',this,'&quot;Add baby.&quot;')"><span class="play">▶</span></button>
+    <button class="thumb tile tile--src" aria-label="Add wooden boat" onclick="pick('ins',this,'&quot;Add wooden boat.&quot;')"><span class="play">▶</span></button>
+    <button class="thumb tile tile--src" aria-label="Add dusty car" onclick="pick('ins',this,'&quot;Add dusty car.&quot;')"><span class="play">▶</span></button>
+    <button class="thumb tile tile--src" aria-label="Add dog" onclick="pick('ins',this,'&quot;Add dog.&quot;')"><span class="play">▶</span></button>
+  </div>
+  <p class="excaption" id="ins-caption">"Add baby."</p>
+  <div class="cmp-row" style="margin:12px 0 8px">
+    <div class="cmp-cell">
+      <div class="tile tile--src"><span class="tag">Source video</span></div>
+      <div class="figure-slot frame"><span>🖼</span><span>Edited 1st frame E</span></div>
+      <div class="name">Source video &amp; edited first frame</div>
+    </div>
+    <div class="cmp-cell">
+      <div class="tile tile--comp"><span class="tag">Composite</span></div>
+      <div class="tile tile--na">No FG output</div>
+      <div class="name">VACE-Inp</div>
+    </div>
+    <div class="cmp-cell">
+      <div class="tile tile--comp"><span class="tag">Composite</span></div>
+      <div class="tile tile--na">No FG output</div>
+      <div class="name">VACE-C</div>
+    </div>
+    <div class="cmp-cell">
+      <div class="tile tile--comp"><span class="tag">Composite</span></div>
+      <div class="tile tile--alpha"><span class="tag">FG layer</span></div>
+      <div class="name">VACE-F</div>
+    </div>
+    <div class="cmp-cell ours">
+      <div class="tile tile--comp"><span class="tag">Composite</span></div>
+      <div class="tile tile--alpha"><span class="tag">FG layer</span></div>
+      <div class="name">DBL-Insert (Ours)</div>
+    </div>
+  </div>
+  <p class="note" style="margin-bottom:20px">Row 1 is each method's composite output, row 2 its explicit foreground layer. VACE-Inp / VACE-C predict a composite directly and never expose a separate layer; VACE-F and DBL-Insert both learn a foreground layer, so their composite shown here is obtained by alpha-blending that layer onto the background. (Thumbnails and tiles are placeholder art until real clips are dropped in — clicking a thumbnail updates the caption/selection above.)</p>
+  <div class="table-wrap" style="margin-bottom:36px">
+    <table>
+      <tr><th>Model</th><th>ViCLIP-T↑</th><th>BG Consist.↑</th><th>Subj. Consist.↑</th><th>Motion Smooth.↑</th><th>Aesthetic↑</th><th>Imaging Qual.↑</th><th>CLIP-I↑</th><th>DINO-I↑</th></tr>
+      <tr><td>AnyV2V</td><td>23.520</td><td>0.906</td><td>0.902</td><td>0.984</td><td>0.480</td><td>0.583</td><td>0.740</td><td>0.567</td></tr>
+      <tr><td>ReVideo</td><td>24.303</td><td>0.926</td><td>0.934</td><td>0.991</td><td>0.511</td><td><strong>0.666</strong></td><td>0.764</td><td>0.699</td></tr>
+      <tr><td>VACE-Inp</td><td>24.717</td><td>0.943</td><td>0.954</td><td>0.992</td><td>0.506</td><td>0.663</td><td>0.760</td><td>0.716</td></tr>
+      <tr><td>VACE-C</td><td>24.596</td><td>0.944</td><td>0.963</td><td>0.993</td><td>0.522</td><td>0.661</td><td>0.781</td><td>0.739</td></tr>
+      <tr><td>VACE-F</td><td>24.473</td><td>0.934</td><td>0.954</td><td>0.992</td><td><strong>0.534</strong></td><td>0.661</td><td>0.783</td><td>0.716</td></tr>
+      <tr class="hl"><td>DBL-Insert</td><td><strong>24.794</strong></td><td><strong>0.948</strong></td><td><strong>0.963</strong></td><td><strong>0.993</strong></td><td>0.535</td><td>0.660</td><td><strong>0.791</strong></td><td><strong>0.748</strong></td></tr>
+    </table>
+  </div>
+
+  <h3>Video Layer Decomposition</h3>
+  <div class="thumbstrip" id="dec-thumbs">
+    <button class="thumb tile tile--comp active" aria-label="Decompose turtle" onclick="pick('dec',this,'&quot;Decompose turtle.&quot;')"><span class="play">▶</span></button>
+    <button class="thumb tile tile--comp" aria-label="Decompose woman" onclick="pick('dec',this,'&quot;Decompose woman.&quot;')"><span class="play">▶</span></button>
+    <button class="thumb tile tile--comp" aria-label="Decompose pelican" onclick="pick('dec',this,'&quot;Decompose pelican.&quot;')"><span class="play">▶</span></button>
+    <button class="thumb tile tile--comp" aria-label="Decompose sheep" onclick="pick('dec',this,'&quot;Decompose sheep.&quot;')"><span class="play">▶</span></button>
+  </div>
+  <p class="excaption" id="dec-caption">"Decompose turtle."</p>
+  <div class="cmp-row" style="margin:12px 0 8px">
+    <div class="cmp-cell"><div class="tile tile--comp"><span class="tag">Comp (input)</span></div><div class="name">Source</div></div>
+    <div class="cmp-cell">
+      <div class="tile tile--bg"><span class="tag">Background</span></div>
+      <div class="tile tile--alpha"><span class="tag">FG layer</span></div>
+      <div class="name">Gen-Omnimatte</div>
+    </div>
+    <div class="cmp-cell">
+      <div class="tile tile--bg"><span class="tag">Background</span></div>
+      <div class="tile tile--alpha"><span class="tag">FG layer</span></div>
+      <div class="name">OmnimatteZero</div>
+    </div>
+    <div class="cmp-cell ours">
+      <div class="tile tile--bg"><span class="tag">Background</span></div>
+      <div class="tile tile--alpha"><span class="tag">FG layer</span></div>
+      <div class="name">DBL-Decompose (Ours)</div>
+    </div>
+  </div>
+  <p class="note" style="margin-bottom:20px">Row 1 is each method's recovered background, row 2 its recovered foreground layer — all three methods produce both. Optimization-based (Gen-Omnimatte) and feed-forward (OmnimatteZero) methods often leave semi-transparent or incomplete foregrounds around fine boundaries and complex effects; DBL-Decompose keeps sharper boundaries and more complete effect separation, at a modest trade-off in pixel-wise reconstruction metrics.</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Method</th><th colspan="3">Movie</th><th colspan="3">Kubric</th></tr>
+      <tr><th></th><th>PSNR↑</th><th>LPIPS↓</th><th>SSIM↑</th><th>PSNR↑</th><th>LPIPS↓</th><th>SSIM↑</th></tr>
+      <tr><td colspan="7" style="text-align:left; font-style:italic; color:var(--muted); background:var(--card)">Reconstruction-based omnimatte methods</td></tr>
+      <tr><td>Omnimatte</td><td>21.76</td><td>0.239</td><td>0.736</td><td>26.81</td><td>0.207</td><td>0.831</td></tr>
+      <tr><td>D2NeRF</td><td>—</td><td>—</td><td>—</td><td>34.99</td><td>0.113</td><td>0.887</td></tr>
+      <tr><td>LNA</td><td>23.10</td><td>0.129</td><td>0.847</td><td>—</td><td>—</td><td>—</td></tr>
+      <tr><td>OmnimatteRF</td><td>33.86</td><td>0.017</td><td>0.981</td><td>40.91</td><td>0.028</td><td>0.970</td></tr>
+      <tr><td>Generative Omnimatte</td><td>32.69</td><td>0.030</td><td>0.989</td><td>44.07</td><td>0.010</td><td>0.981</td></tr>
+      <tr><td>OmnimatteZero</td><td>35.11</td><td>0.014</td><td>0.992</td><td>44.97</td><td>0.010</td><td>0.988</td></tr>
+      <tr><td colspan="7" style="text-align:left; font-style:italic; color:var(--muted); background:var(--card)">Generation-based diffusion methods</td></tr>
+      <tr><td>ObjectDrop</td><td>28.05</td><td>0.124</td><td>—</td><td>34.22</td><td>0.083</td><td>—</td></tr>
+      <tr><td>Lumiere Inp.</td><td>26.62</td><td>0.148</td><td>—</td><td>31.46</td><td>0.157</td><td>—</td></tr>
+      <tr><td>Propainter</td><td>27.44</td><td>0.114</td><td>—</td><td>34.67</td><td>0.056</td><td>—</td></tr>
+      <tr><td>DiffuEraser</td><td>29.51</td><td>0.105</td><td>—</td><td>35.19</td><td>0.048</td><td>—</td></tr>
+      <tr class="hl"><td>DBL-Decompose</td><td>33.42</td><td>0.017</td><td>0.971</td><td>38.78</td><td>0.021</td><td>0.977</td></tr>
+    </table>
+  </div>
+  <p class="note">Reconstruction-based, per-scene optimization methods (top group) score highest on raw pixel fidelity, since they directly optimize to reproduce the input rather than generate a plausible layer. Among generation-based diffusion methods (bottom group), DBL-Decompose is best on every metric.</p>
+</section>
+
+<section id="ablation" class="section wrap">
+  <div class="section-head">
+    <div class="eyebrow">06 — Ablations</div>
+    <h2>What each design choice buys you</h2>
+  </div>
+
+  <h3>LoRA vs. DoRA per branch</h3>
+  <p class="muted" style="max-width:640px">The RGB branch stays close to the pretrained latent space, so LoRA is enough; the RGBA branch has to learn an out-of-domain concept (transparency), where DoRA's decoupled magnitude/direction update adapts more stably.</p>
+  <div class="table-wrap" style="margin:14px 0 36px">
+    <table>
+      <tr><th>Method (RGB–RGBA)</th><th>ViCLIP-T↑</th><th>BG Consist.↑</th><th>Subj. Consist.↑</th><th>Motion Smooth.↑</th><th>Aesthetic↑</th><th>Imaging Qual.↑</th><th>CLIP-I↑</th><th>DINO-I↑</th></tr>
+      <tr><td>DoRA – DoRA</td><td>24.520</td><td>0.927</td><td>0.935</td><td>0.993</td><td>0.525</td><td>0.641</td><td>0.774</td><td>0.672</td></tr>
+      <tr><td>LoRA – LoRA</td><td>24.681</td><td>0.938</td><td>0.954</td><td>0.994</td><td><strong>0.539</strong></td><td>0.657</td><td>0.775</td><td>0.742</td></tr>
+      <tr><td>DoRA – LoRA</td><td>24.604</td><td>0.935</td><td>0.944</td><td>0.993</td><td><strong>0.539</strong></td><td><strong>0.664</strong></td><td>0.788</td><td>0.701</td></tr>
+      <tr class="hl"><td>LoRA – DoRA (Ours)</td><td><strong>24.794</strong></td><td><strong>0.948</strong></td><td><strong>0.963</strong></td><td>0.993</td><td>0.535</td><td>0.660</td><td><strong>0.791</strong></td><td><strong>0.748</strong></td></tr>
+    </table>
+  </div>
+
+  <div class="two-col" style="margin-bottom:40px">
+    <div class="card">
+      <h3 style="margin-bottom:6px">Background refinement — dataset quality</h3>
+      <p class="muted">Object-removal models leave afterimage / ghosting artifacts. AGBI applies source-appearance-guided inpainting with a two-stage mask (bounding-box, then object-level) to clean the background <em>before</em> it becomes training supervision.</p>
+      <p class="note" style="margin:12px 0 4px">Example 1</p>
+      <div class="grid2">
+        <div class="tile tile--bg" style="opacity:.65"><span class="tag">Before AGBI (residual artifacts)</span></div>
+        <div class="tile tile--bg"><span class="tag">After AGBI (refined)</span></div>
+      </div>
+      <p class="note" style="margin:14px 0 4px">Example 2</p>
+      <div class="grid2">
+        <div class="tile tile--bg" style="opacity:.65"><span class="tag">Before AGBI (residual artifacts)</span></div>
+        <div class="tile tile--bg"><span class="tag">After AGBI (refined)</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3 style="margin-bottom:6px">Background refinement — model reconstruction quality</h3>
+      <p class="muted">Training on AGBI-refined backgrounds, rather than raw object-removal output, changes what the trained model reconstructs at inference:</p>
+      <p class="note" style="margin:12px 0 4px">Example 1</p>
+      <div class="grid2">
+        <div class="tile tile--bg" style="opacity:.65"><span class="tag">Trained w/o refined BG</span></div>
+        <div class="tile tile--bg"><span class="tag">Trained w/ refined BG</span></div>
+      </div>
+      <p class="note" style="margin:14px 0 4px">Example 2</p>
+      <div class="grid2">
+        <div class="tile tile--bg" style="opacity:.65"><span class="tag">Trained w/o refined BG</span></div>
+        <div class="tile tile--bg"><span class="tag">Trained w/ refined BG</span></div>
+      </div>
+      <p class="note" style="margin-top:10px">Without refined training backgrounds, DBL-Decompose tends to reproduce residual traces of the removed object; with AGBI-refined supervision, backgrounds come out cleaner with substantially fewer artifacts (full numbers in the paper's supplementary Table S7).</p>
+    </div>
+  </div>
+</section>
+
+<section id="gallery" class="section wrap">
+  <div class="section-head">
+    <div class="eyebrow">07 — Extended gallery</div>
+    <h2>More qualitative examples</h2>
+    <p>A few additional clips beyond the ones highlighted in section 02 — pick a thumbnail to load it below.</p>
+  </div>
+
+  <h3 style="margin-bottom:14px">Video Layered Object Insertion — BG → FG + Composite</h3>
+  <div class="thumbstrip" id="gal-ins-thumbs">
+    <button class="thumb tile tile--src active" aria-label="Add balloon" onclick="pick('gal-ins',this,'&quot;Add balloon.&quot;')"><span class="play">▶</span></button>
+    <button class="thumb tile tile--src" aria-label="Add bicycle" onclick="pick('gal-ins',this,'&quot;Add bicycle.&quot;')"><span class="play">▶</span></button>
+    <button class="thumb tile tile--src" aria-label="Add umbrella" onclick="pick('gal-ins',this,'&quot;Add umbrella.&quot;')"><span class="play">▶</span></button>
+  </div>
+  <div class="excard" style="margin-bottom:40px">
+    <div class="grid3">
+      <div class="tile tile--src"><span class="tag">BG</span></div>
+      <div class="tile tile--alpha"><span class="tag">FG</span></div>
+      <div class="tile tile--comp"><span class="tag">Comp</span></div>
+    </div>
+    <div class="excaption" id="gal-ins-caption">"Add balloon."</div>
+  </div>
+
+  <h3 style="margin-bottom:14px">Video Layer Decomposition — Composite → BG + FG</h3>
+  <div class="thumbstrip" id="gal-dec-thumbs">
+    <button class="thumb tile tile--comp active" aria-label="Decompose kite" onclick="pick('gal-dec',this,'&quot;Decompose kite.&quot;')"><span class="play">▶</span></button>
+    <button class="thumb tile tile--comp" aria-label="Decompose surfer" onclick="pick('gal-dec',this,'&quot;Decompose surfer.&quot;')"><span class="play">▶</span></button>
+    <button class="thumb tile tile--comp" aria-label="Decompose horse" onclick="pick('gal-dec',this,'&quot;Decompose horse.&quot;')"><span class="play">▶</span></button>
+  </div>
+  <div class="excard">
+    <div class="grid3">
+      <div class="tile tile--comp"><span class="tag">Comp</span></div>
+      <div class="tile tile--bg"><span class="tag">BG</span></div>
+      <div class="tile tile--alpha"><span class="tag">FG</span></div>
+    </div>
+    <div class="excaption" id="gal-dec-caption">"Decompose kite."</div>
+  </div>
+</section>
+
+<section id="bibtex" class="section wrap">
+  <div class="section-head">
+    <div class="eyebrow">08 — Cite this work</div>
+    <h2>BibTeX</h2>
+  </div>
+  <pre>@inproceedings{anonymous2027dbldiffusion,
+  title     = {Explicit Layer Modeling for Video Object Insertion and Video Layer Decomposition},
+  author    = {Anonymous Authors},
+  booktitle = {Submitted to the International Conference on Learning Representations (ICLR)},
+  year      = {2027},
+  note      = {Under double-blind review}
+}</pre>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>DBL-Diffusion · TriLayer Dataset · Paper under double-blind review, ICLR 2027</p>
+    <p class="abbrv">Page layout inspired by academic project-page conventions. Media tiles are placeholders — swap in real clips/images before publishing publicly.</p>
+  </div>
+</footer>
+
+<script>
+function pick(group, el, text){
+  var strip = el.parentElement;
+  var thumbs = strip.querySelectorAll('.thumb');
+  for(var i=0;i<thumbs.length;i++){ thumbs[i].classList.remove('active'); }
+  el.classList.add('active');
+  var cap = document.getElementById(group+'-caption');
+  if(cap){ cap.textContent = text.replace(/&quot;/g,'"'); }
+}
+</script>
+</body>
+</html>
