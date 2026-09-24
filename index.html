@@ -395,7 +395,7 @@ footer{border-top:1px solid var(--line); padding:34px 0; text-align:center; colo
     </div>
   </div>
   <div class="principles">
-    <div class="card"><h3>Joint cross-attention</h3><p class="muted">Every block lets the RGB branch attend to RGBA features and vice versa, so the composite reflects the foreground layer's geometry while the layer inherits scene-dependent lighting and occlusion.</p></div>
+    <div class="card"><h3>Joint cross-attention</h3><p class="muted">Each block enables bidirectional information exchange between the RGB and RGBA branches, allowing the RGB branch to incorporate foreground geometry while the RGBA branch captures scene-dependent context.</p></div>
     <div class="card"><h3>LoRA–DoRA hybrid</h3><p class="muted">LoRA keeps the RGB branch close to its pretrained prior; DoRA's decoupled magnitude/direction update gives the RGBA branch room to learn transparency.</p></div>
     <div class="card"><h3>Disentangled timestep sampling</h3><p class="muted">Each branch's noise level is controlled independently, which also enables conditional edits — e.g. freezing the RGBA branch at low noise to edit a foreground layer while keeping the background fixed.</p></div>
   </div>
