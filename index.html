@@ -211,15 +211,16 @@ footer{border-top:1px solid var(--line); padding:34px 0; text-align:center; colo
     <div class="flowhead flowhead--right" aria-hidden="true"></div>
     <div class="flowbody flowbody--left">
       <div class="grid2">
-        <div class="tile tile--src" data-src="assets/video/source_01.mp4"><span class="tag">BG video (input)</span></div>
-        <div class="figure-slot frame"><span>🖼</span><span>Edited 1st frame E</span></div>
+        <div class="tile tile--src" data-src="./videos/01/example_15_resized.mp4"><span class="tag">BG video (input)</span></div>
+        <!-- <div class="figure-slot frame"><span>🖼</span><span>Edited 1st frame E</span></div> -->
+        <div class="figure-slot frame" data-src="assets/first_frame_15_resized.png"><span class="tag">Edited first frame</span></div>
       </div>
     </div>
     <div class="flowarrow" aria-hidden="true">→</div>
     <div class="flowbody flowbody--right">
       <div class="grid2">
-        <div class="tile tile--alpha" data-src="assets/video/foreground_01.mp4"><span class="tag">FG layer (RGBA)</span></div>
-        <div class="tile tile--comp" data-src="assets/video/composite_01.mp4"><span class="tag">Composite</span></div>
+        <div class="tile tile--alpha" data-src="./videos/01/ours_spyderman_foreground.mp4"><span class="tag">FG layer (RGBA)</span></div>
+        <div class="tile tile--comp" data-src="./videos/01/spyderman_composite.mp4"><span class="tag">Composite</span></div>
       </div>
     </div>
   </div>
@@ -227,17 +228,18 @@ footer{border-top:1px solid var(--line); padding:34px 0; text-align:center; colo
     <div class="eqn">V<sub>out</sub> = <span class="accent">α</span> ⊙ V<sub>F</sub><sup>rgb</sup> + (1 − <span class="accent">α</span>) ⊙ V<sub>B</sub></div>
     <p class="eqn-note">(V<sub>F</sub><sup>rgb</sup>, <span class="accent">α</span>) = V<sub>F</sub> — the predicted RGBA foreground layer, split into its RGB and alpha channels. V<sub>B</sub> is the input background video and ⊙ is elementwise multiplication. The RGB branch's own composite prediction V<sub>C</sub> is only an auxiliary signal during denoising — the final result alpha-blends V<sub>F</sub> directly onto V<sub>B</sub>, which is why DBL-Insert stays robust to minor inconsistencies in V<sub>C</sub>.</p>
   </div>
+  
   <div class="flowgrid" style="margin-top:28px">
     <div class="flowhead flowhead--left"><span class="tasklabel dec">DBL-Decompose</span></div>
     <div class="flowhead flowhead--right" aria-hidden="true"></div>
     <div class="flowbody flowbody--left">
-      <div class="grid2"><div class="tile tile--comp" data-src="assets/video/composite_02.mp4"><span class="tag">Composite (input)</span></div></div>
+      <div class="grid2"><div class="tile tile--comp" data-src="./videos/01/ex2_decomp_composite.mp4"><span class="tag">Composite (input)</span></div></div>
     </div>
     <div class="flowarrow" aria-hidden="true">→</div>
     <div class="flowbody flowbody--right">
       <div class="grid2">
-        <div class="tile tile--bg" data-src="assets/video/background_01.mp4"><span class="tag">BG video</span></div>
-        <div class="tile tile--alpha" data-src="assets/video/foreground_02.mp4"><span class="tag">FG layer (RGBA)</span></div>
+        <div class="tile tile--bg" data-src="./videos/01/ex2_decomp_background.mp4"><span class="tag">BG video</span></div>
+        <div class="tile tile--alpha" data-src="./videos/01/ex2_decomp_foreground.mp4"><span class="tag">FG layer (RGBA)</span></div>
       </div>
     </div>
   </div>
