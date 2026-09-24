@@ -213,11 +213,11 @@ footer{border-top:1px solid var(--line); padding:34px 0; text-align:center; colo
 <section id="overview" class="section wrap">
   <div class="section-head">
     <div class="eyebrow">01 — Two tasks, one backbone</div>
-    <h2>One dual-branch model, two layered video tasks</h2>
-    <p>DBL-Diffusion runs an RGB branch and an RGBA branch side by side, exchanging information at every denoising step through joint cross-attention. The same backbone instantiates two tasks that were previously trained without any direct layer supervision.</p>
+    <h2>One dual-branch model,<br>two layered video tasks</h2>
+    <p>DBL-Diffusion runs an RGB branch and an RGBA branch side by side, exchanging information at every denoising step through joint cross-attention. The same backbone instantiates two tasks that were previously trained<br>without any direct layer supervision.</p>
   </div>
   <div class="flowgrid">
-    <div class="flowhead flowhead--left"><span class="tasklabel ins">DBL-Insert</span></div>
+    <div class="flowhead flowhead--left"><span class="tasklabel ins">DBL-Insert: Add Spyder-man and Iron Man Helmat.</span></div>
     <div class="flowhead flowhead--right" aria-hidden="true"></div>
     <div class="flowbody flowbody--left">
       <div class="grid2">
@@ -236,11 +236,11 @@ footer{border-top:1px solid var(--line); padding:34px 0; text-align:center; colo
   </div>
   <div class="eqn-card">
     <div class="eqn">V<sub>out</sub> = <span class="accent">α</span> ⊙ V<sub>F</sub><sup>rgb</sup> + (1 − <span class="accent">α</span>) ⊙ V<sub>B</sub></div>
-    <p class="eqn-note">(V<sub>F</sub><sup>rgb</sup>, <span class="accent">α</span>) = V<sub>F</sub> — the predicted RGBA foreground layer, split into its RGB and alpha channels. V<sub>B</sub> is the input background video and ⊙ is elementwise multiplication. The RGB branch's own composite prediction V<sub>C</sub> is only an auxiliary signal during denoising — the final result alpha-blends V<sub>F</sub> directly onto V<sub>B</sub>, which is why DBL-Insert stays robust to minor inconsistencies in V<sub>C</sub>.</p>
+    <p class="eqn-note">(V<sub>F</sub><sup>rgb</sup>, <span class="accent">α</span>) = V<sub>F</sub> — the predicted RGBA foreground layer, split into its RGB and alpha channels. V<sub>B</sub> is the input background video and ⊙ is elementwise multiplication. The RGB branch's own composite prediction V<sub>C</sub> is only an auxiliary signal during denoising — the final result alpha-blends V<sub>F</sub> directly onto V<sub>B</sub>,<br>which is why DBL-Insert stays robust to minor inconsistencies in V<sub>C</sub>.</p>
   </div>
   
   <div class="flowgrid" style="margin-top:28px">
-    <div class="flowhead flowhead--left"><span class="tasklabel dec">DBL-Decompose</span></div>
+    <div class="flowhead flowhead--left"><span class="tasklabel dec">DBL-Decompose: Decompose Bird.</span></div>
     <div class="flowhead flowhead--right" aria-hidden="true"></div>
     <div class="flowbody flowbody--left">
       <div class="grid2"><div class="tile tile--comp" data-src="./videos/01/ex2_decomp_composite.mp4"><span class="tag">Composite (input)</span></div></div>
@@ -253,7 +253,7 @@ footer{border-top:1px solid var(--line); padding:34px 0; text-align:center; colo
       </div>
     </div>
   </div>
-  <p class="note" style="margin-top:18px">Green tiles denote the explicit RGBA foreground layer — pulled the way a compositor keys a matte against a green screen. It carries both the object and the effects it induces (shadows, reflections). Tiles above are layout placeholders standing in for result clips.</p>
+  <p class="note" style="margin-top:18px">Green tiles denote the explicit RGBA foreground layer — pulled the way a compositor keys a matte against a green screen.<br>It carries both the object and the effects it induces (shadows, reflections). Tiles above are layout placeholders standing in for result clips.</p>
 </section>
 
 <section id="results" class="section wrap">
