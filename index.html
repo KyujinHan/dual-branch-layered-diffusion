@@ -383,9 +383,9 @@ footer{border-top:1px solid var(--line); padding:34px 0; text-align:center; colo
     <p>Both tasks reuse the same VACE-based backbone, split into an RGB branch and an RGBA branch that talk to each other at every transformer block.</p>
   </div>
   <div class="archgrid">
-    <div class="archbox rgb"><div class="lab">RGB Branch</div><h3>VACE + LoRA</h3><p class="note" style="margin:6px 0 0">In-domain: predicts RGB video within the pretrained latent space (scene-level composite / clean background).</p></div>
+    <div class="archbox rgb"><div class="lab">RGB Branch</div><h3>VACE + LoRA</h3><p class="note" style="margin:6px 0 0">In-domain: predicts RGB video within the pretrained latent space (scene-level composite and clean background).</p></div>
     <div class="archarrow">⇄</div>
-    <div class="archbox rgba"><div class="lab">RGBA Branch</div><h3>VACE + DoRA</h3><p class="note" style="margin:6px 0 0">Out-of-domain: predicts the RGBA foreground layer using the WAN-alpha VAE (transparency, alpha mattes).</p></div>
+    <div class="archbox rgba"><div class="lab">RGBA Branch</div><h3>VACE + DoRA</h3><p class="note" style="margin:6px 0 0">Out-of-domain: predicts the RGBA foreground layer using the WAN-alpha VAE (object's transparency, visual effects, and alpha mattes).</p></div>
   </div>
   <div class="method-figure">
     <!-- Replace the figure-slot below with: <img class="method-figure-img" src="assets/model_figure.png" alt="DBL-Diffusion architecture"> -->
