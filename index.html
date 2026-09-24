@@ -122,6 +122,27 @@ nav.top .wrap{display:flex; align-items:center; justify-content:space-between; h
 .figure-slot{position:relative; border:1px dashed var(--line); border-radius:16px; background:repeating-linear-gradient(135deg,var(--card2),var(--card2) 10px,#1c222a 10px,#1c222a 20px); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; color:var(--muted); font-family:var(--mono); font-size:.78rem; text-align:center; padding:20px;}
 .figure-slot .playbig{width:54px; height:54px; border-radius:50%; background:var(--green); color:#08150F; display:flex; align-items:center; justify-content:center; font-size:1rem}
 .figure-slot.teaser{aspect-ratio:21/9}
+.figure-slot.wide[data-src="./videos/03/dataset_figure.png"] {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: auto;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 12px;
+}
+.figure-slot.wide[data-src="./videos/03/dataset_figure.png"] .media-element {
+  position: static;
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
 .figure-slot.wide {
   position: relative !important;
   display: block !important;
@@ -136,7 +157,6 @@ nav.top .wrap{display:flex; align-items:center; justify-content:space-between; h
   overflow: hidden !important;
   border-radius: 6px;
 }
-
 .figure-slot.wide .media-element {
   position: static !important;
   display: block !important;
