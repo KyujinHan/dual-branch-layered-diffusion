@@ -187,7 +187,7 @@ footer{border-top:1px solid var(--line); padding:34px 0; text-align:center; colo
 </nav>
 
 <header class="hero wrap">
-  <div class="eyebrow">arXiv</div>
+  <div class="eyebrow">arXiv 2026</div>
   <h1>DBL-Diffusion</h1>
   <p class="sub"><span class="sub-line">Explicit Layer Modeling for Video Object Insertion and Video Layer Decomposition</span><span class="sub-line">Layered diffusion framework that first jointly generates RGB scene content and RGBA foreground layers.</span></p>
   <div class="authors">Kyujin Han, Seungjoo Shin, Sunghyun Cho</div>
@@ -260,32 +260,32 @@ footer{border-top:1px solid var(--line); padding:34px 0; text-align:center; colo
   <div class="panel">
     <div class="section-head">
       <div class="eyebrow">02 — Qualitative results</div>
-      <h2>General performance, before any baseline comparison</h2>
-      <p>Each row shows the model input on the left and the two DBL-Diffusion outputs on the right — no cherry-picked side-by-side yet, just what the model produces.</p>
+      <h2>General performance,<br>lavered video results</h2>
+      <p>Each row shows the model input on the left and<br>the two DBL-Diffusion outputs on the right.</p>
     </div>
 
     <h3 style="margin-bottom:14px">Video Layered Object Insertion — BG → FG + Composite</h3>
     <div class="exgrid" style="margin-bottom:40px">
       <div class="excard"><div class="grid3">
-        <div class="tile tile--src" data-src="assets/video/source_02.mp4"><span class="tag">BG</span></div>
-        <div class="tile tile--alpha" data-src="assets/video/foreground_03.mp4"><span class="tag">FG</span></div>
-        <div class="tile tile--comp" data-src="assets/video/composite_03.mp4"><span class="tag">Comp</span></div>
-      </div><div class="excaption">"Add baby."</div></div>
+        <div class="tile tile--src" data-src="./videos/02/insert/ex3_insert_background.mp4"><span class="tag">BG</span></div>
+        <div class="tile tile--alpha" data-src="./videos/02/insert/ex3_insert_foreground.mp4"><span class="tag">FG</span></div>
+        <div class="tile tile--comp" data-src="./videos/02/insert/man_composite.mp4"><span class="tag">Comp</span></div>
+      </div><div class="excaption">"Add Man."</div></div>
       <div class="excard"><div class="grid3">
-        <div class="tile tile--src" data-src="assets/video/source_03.mp4"><span class="tag">BG</span></div>
-        <div class="tile tile--alpha" data-src="assets/video/foreground_04.mp4"><span class="tag">FG</span></div>
-        <div class="tile tile--comp" data-src="assets/video/composite_04.mp4"><span class="tag">Comp</span></div>
-      </div><div class="excaption">"Add wooden boat."</div></div>
+        <div class="tile tile--src" data-src="./videos/02/insert/example_12_resized.mp4"><span class="tag">BG</span></div>
+        <div class="tile tile--alpha" data-src="./videos/02/insert/ex3_ours_foreground.mp4"><span class="tag">FG</span></div>
+        <div class="tile tile--comp" data-src="./videos/02/insert/car_composite.mp4"><span class="tag">Comp</span></div>
+      </div><div class="excaption">"Add Dusty Car."</div></div>
       <div class="excard"><div class="grid3">
-        <div class="tile tile--src" data-src="assets/video/source_04.mp4"><span class="tag">BG</span></div>
-        <div class="tile tile--alpha" data-src="assets/video/foreground_05.mp4"><span class="tag">FG</span></div>
-        <div class="tile tile--comp" data-src="assets/video/composite_05.mp4"><span class="tag">Comp</span></div>
-      </div><div class="excaption">"Add dusty car."</div></div>
+        <div class="tile tile--src" data-src="./videos/02/insert/example_2_resized.mp4"><span class="tag">BG</span></div>
+        <div class="tile tile--alpha" data-src="./videos/02/insert/ours_golem_foreground.mp4"><span class="tag">FG</span></div>
+        <div class="tile tile--comp" data-src="./videos/02/insert/golem_composite.mp4"><span class="tag">Comp</span></div>
+      </div><div class="excaption">"Add animated Golem."</div></div>
       <div class="excard"><div class="grid3">
-        <div class="tile tile--src" data-src="assets/video/source_05.mp4"><span class="tag">BG</span></div>
-        <div class="tile tile--alpha" data-src="assets/video/foreground_06.mp4"><span class="tag">FG</span></div>
-        <div class="tile tile--comp" data-src="assets/video/composite_06.mp4"><span class="tag">Comp</span></div>
-      </div><div class="excaption">"Add dog."</div></div>
+        <div class="tile tile--src" data-src="./videos/02/insert/ex2_insert_background.mp4"><span class="tag">BG</span></div>
+        <div class="tile tile--alpha" data-src="./videos/02/insert/ex2_insert_foreground.mp4"><span class="tag">FG</span></div>
+        <div class="tile tile--comp" data-src="./videos/02/insert/swan_composite.mp4"><span class="tag">Comp</span></div>
+      </div><div class="excaption">"Add White Swan."</div></div>
     </div>
 
     <h3 style="margin-bottom:14px">Video Layer Decomposition — Composite → BG + FG</h3>
