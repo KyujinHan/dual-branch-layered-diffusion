@@ -130,10 +130,13 @@ nav.top .wrap{display:flex; align-items:center; justify-content:space-between; h
   min-height: 0 !important;
   aspect-ratio: auto !important;
   padding: 0 !important;
-
-  border-radius: 12px;
-  overflow: hidden;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+  border-radius: 6px;
 }
+
 .figure-slot.wide .media-element {
   position: static !important;
   display: block !important;
@@ -141,7 +144,8 @@ nav.top .wrap{display:flex; align-items:center; justify-content:space-between; h
   height: auto !important;
   max-width: 100% !important;
   margin: 0 !important;
-  object-fit: contain;
+  padding: 0 !important;
+  border: 0 !important;
 }
 .figure-slot.frame{aspect-ratio:16/9; font-size:.62rem; padding:8px; gap:4px}
 .eqn-card{background:linear-gradient(180deg,rgba(24,31,39,.96),rgba(21,28,35,.96)); border:1px solid rgba(255,255,255,.065); border-radius:15px; padding:22px 24px; margin-top:24px; box-shadow:0 12px 32px rgba(0,0,0,.12)}
