@@ -776,8 +776,40 @@ footer{border-top:1px solid var(--line); padding:34px 0; text-align:center; colo
   </div>
 
   <h3>Fréchet Inception Distance</h3>
-  <p class="muted" style="max-width:640px">The RGB branch stays close to the pretrained latent space, so LoRA is enough; the RGBA branch has to learn an out-of-domain concept (transparency), where DoRA's decoupled magnitude/direction update adapts more stably.</p>
+  <p class="muted" style="max-width:640px">DBL-Decompose achieves the superior perceptual fidelity for both foreground and background, as evidenced by consistently lower FID and more visually plausible results.</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Model</th><th>Kubric (BG)</th><th>Movie (BG)</th><th>LayeredVid-Benchmark (FG)</th></tr>
+      <tr><td>Gen-Omnimatte</td><td>16.598</td><td>16.344</td><td>60.826</td></tr>
+      <tr><td>OmnimatteZero</td><td>96.077</td><td>36.428</td><td>46.882</td></tr>
+      <tr class="hl"><td>DBL-Decompose</td><td>15.815</td><td>14.364</td><td>32.967</td></tr>
+    </table>
+  </div>
+
+  <h3>Human Preference Study: Video Object Insertion</h3>
+  <p class="muted" style="max-width:640px">DBL-Insert is consistently preferred over all competing methods across every evaluation criterion, demonstrating superior insertion quality and better alignment with the intended editing objective.</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Model</th><th>Subject Consistency(↑)</th><th>Insertion Rationality(↑)</th><th>Prompt Alignment(↑)</th><th>Overall Quality(↑)</th></tr>
+      <tr><td>AnyV2V</td><td>1.0%</td><td>1.0%</td><td>1.5%</td><td>1.5%</td></tr>
+      <tr><td>ReVideo</td><td>0.5%</td><td>1.0%</td><td>1.0%</td><td>1.5%</td></tr>
+      <tr><td>VACE-Inp</td><td>17.5%</td><td>10.0%</td><td>21.0%</td><td>15.5%</td></tr>
+      <tr><td>VACE-C</td><td>15.0%</td><td>11.5%</td><td>18.5%</td><td>13.0%</td></tr>
+      <tr><td>VACE-F</td><td>9.5%</td><td>8.5%</td><td>7.5%</td><td>7.0%</td></tr>
+      <tr class="hl"><td>DBL-Insert</td><td>56.5%</td><td>68.0%</td><td>50.5%</td><td>61.5%</td></tr>
+    </table>
+  </div>
   
+  <h3>Human Preference Study: Video Layer Decomposition</h3>
+  <p class="muted" style="max-width:640px">DBL-Decompose receives the highest preference for both background and foreground reconstruction by a large margin, indicating that our explicit layer modeling produces more visually plausible decomposed layers than existing methods.</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Model</th><th>Background Quality(↑)</th><th>Foreground Quality(↑)</th></tr>
+      <tr><td>Gen-Omnimatte</td><td>8.0%</td><td>19.0%</td></tr>
+      <tr><td>OmnimatteZero</td><td>20.5%</td><td>6.0%</td></tr>
+      <tr class="hl"><td>DBL-Decompose</td><td>71.5%</td><td>75.0%</td></tr>
+    </table>
+  </div>
 </section>
   
 <section id="bibtex" class="section wrap">
