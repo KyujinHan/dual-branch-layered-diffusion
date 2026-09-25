@@ -527,7 +527,7 @@ footer{border-top:1px solid var(--line); padding:34px 0; text-align:center; colo
       <div class="name">DBL-Insert (Ours)</div>
     </div>
   </div>
-  <p class="note" style="margin-bottom:20px">Row 1 is each method's composite output, row 2 its explicit foreground layer. VACE-Inp / VACE-C predict a composite directly and never expose a separate layer; VACE-F and DBL-Insert both learn a foreground layer, so their composite shown here is obtained by alpha-blending that layer onto the background.</p>
+  <p class="note" style="margin-bottom:20px">Row 1 is each method's composite output, row 2 its explicit foreground layer. VACE-Inp / VACE-C predict a composite directly and never expose a separate layer;<br>VACE-F and DBL-Insert both learn a foreground layer, so their composite shown here is obtained by alpha-blending that layer onto the background.<br>VACE-Inp cannot synthesize object-induced effects beyond the masked region, while VACE-C and VACE-F show unstable effects and background appearance changes. DBL-Insert jointly synthesizes explicit foreground layers and scene-consistent composites for more reliable integration.</p>
   <div class="table-wrap" style="margin-bottom:36px">
     <table>
       <tr><th>Model</th><th>ViCLIP-T↑</th><th>BG Consist.↑</th><th>Subj. Consist.↑</th><th>Motion Smooth.↑</th><th>Aesthetic↑</th><th>Imaging Qual.↑</th><th>CLIP-I↑</th><th>DINO-I↑</th></tr>
@@ -775,25 +775,45 @@ function pick(group, el, text){
   if(group === 'ins'){
       var results = document.getElementById('ins-results');
   
+      // Source video
       var source = results.querySelector('.tile--src');
-      var comp1 = results.querySelectorAll('.tile--comp')[0];
-      var comp2 = results.querySelectorAll('.tile--comp')[1];
-      var comp3 = results.querySelectorAll('.tile--comp')[2];
   
-      var fg1 = results.querySelectorAll('.tile--alpha')[0];
-      var fg2 = results.querySelectorAll('.tile--alpha')[1];
+      // Edited first frame
+      var edited = results.querySelector('.figure-slot.frame');
   
+      // Composite: VACE-Inp / VACE-C / VACE-F / DBL-Insert
+      var comps = results.querySelectorAll('.tile--comp');
+      var comp1 = comps[0];
+      var comp2 = comps[1];
+      var comp3 = comps[2];
+      var comp4 = comps[3];
+  
+      // Foreground: VACE-F / DBL-Insert
+      var fgs = results.querySelectorAll('.tile--alpha');
+      var fg1 = fgs[0];
+      var fg2 = fgs[1];
+  
+      // Update paths
       source.setAttribute('data-src', el.dataset.source);
+      edited.setAttribute('data-src', el.dataset.edit);
+  
       comp1.setAttribute('data-src', el.dataset.vaceInpComp);
       comp2.setAttribute('data-src', el.dataset.vaceCComp);
       comp3.setAttribute('data-src', el.dataset.vaceFComp);
+      comp4.setAttribute('data-src', el.dataset.oursComp);
+  
       fg1.setAttribute('data-src', el.dataset.vaceFFg);
       fg2.setAttribute('data-src', el.dataset.oursFg);
   
+      // Remount media
       updateMedia(source);
+      updateMedia(edited);
+  
       updateMedia(comp1);
       updateMedia(comp2);
       updateMedia(comp3);
+      updateMedia(comp4);
+  
       updateMedia(fg1);
       updateMedia(fg2);
   }
