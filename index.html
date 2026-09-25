@@ -361,16 +361,32 @@ footer{border-top:1px solid var(--line); padding:34px 0; text-align:center; colo
               data-bg="./videos/03/preprocess_majestic-lion-in-african-savannah-during-day-30280654_bg_refine_agbi.mp4"
               data-fg="./videos/03/RGBA_preprocess_majestic-lion-in-african-savannah-during-day-30280654.mp4"
               aria-label="lion" onclick="pick('tri',this,'Majestic lion in african savannah during day.')"></button>
-      <button class="thumb tile" data-src="./videos/03/woman_first_frame.png" aria-label="Kayak on the river" onclick="pick('tri',this,'Athletic woman stretching outdoors.')"></button>
-      <button class="thumb tile" data-src="./videos/03/man_first_frame.png" aria-label="Skateboarder at the park" onclick="pick('tri',this,'Man wearing sportswear exercising.')"></button>
-      <button class="thumb tile" data-src="./videos/03/swan_first_frame.png" aria-label="Person with an umbrella" onclick="pick('tri',this,'Black swan floating on a lake.')"></button>
-      <button class="thumb tile" data-src="./videos/03/woman_2_first_frame.png" aria-label="Horse rider on the trail" onclick="pick('tri',this,'Woman walking down the stairs.')"></button>
+      <button class="thumb tile" data-src="./videos/03/woman_first_frame.png" 
+              data-comp="./videos/03/preprocess_athletic-woman-stretching-outdoors-8456656.mp4"
+              data-bg="./videos/03/preprocess_athletic-woman-stretching-outdoors-8456656_bg_refine_agbi.mp4"
+              data-fg="./videos/03/preprocess_athletic-woman-stretching-outdoors-8456656_foreground.mp4"
+              aria-label="woman" onclick="pick('tri',this,'Athletic woman stretching outdoors.')"></button>
+      <button class="thumb tile" data-src="./videos/03/man_first_frame.png" 
+              data-comp="./videos/03/preprocess_people-wearing-sportswear-exercising-8637697.mp4"
+              data-bg="./videos/03/preprocess_people-wearing-sportswear-exercising-8637697_agbi.mp4"
+              data-fg="./videos/03/preprocess_people-wearing-sportswear-exercising-8637697_GOOD.mp4"
+              aria-label="man" onclick="pick('tri',this,'Man wearing sportswear exercising.')"></button>
+      <button class="thumb tile" data-src="./videos/03/swan_first_frame.png" 
+              data-comp="./videos/03/preprocess_a-black-swan-floating-on-a-lake-9388985.mp4"
+              data-bg="./videos/03/preprocess_a-black-swan-floating-on-a-lake-9388985_bg_refine_agbi.mp4"
+              data-fg="./videos/03/ours_swan_rgba_video.mp4"
+              aria-label="black swan" onclick="pick('tri',this,'Black swan floating on a lake.')"></button>
+      <button class="thumb tile" data-src="./videos/03/woman_2_first_frame.png" 
+              data-comp="./videos/03/preprocess_people-walking-down-the-stairs-9244035.mp4"
+              data-bg="./videos/03/preprocess_people-walking-down-the-stairs-9244035_bg_refine_agbi.mp4"
+              data-fg="./videos/03/ours_woman_rgba_video.mp4"
+              aria-label="woman" onclick="pick('tri',this,'Woman walking down the stairs.')"></button>
     </div>
     <p class="excaption" id="tri-caption">Happy dog running in sunny cambridge fields.</p>
     <div class="triplet" id="tri-triplet" style="margin-bottom:10px">
-      <div class="tile tile--comp"><span class="tag">Composite</span></div>
-      <div class="tile tile--bg"><span class="tag">Background</span></div>
-      <div class="tile tile--alpha"><span class="tag">Foreground (RGBA)</span></div>
+      <div class="tile tile--comp" data-src='./videos/03/preprocess_happy-dog-running-in-sunny-cambridge-fields-32924777.mp4'><span class="tag">Composite</span></div>
+      <div class="tile tile--bg" data-src='./videos/03/preprocess_happy-dog-running-in-sunny-cambridge-fields-32924777_bg_refine_agbi.mp4'><span class="tag">Background</span></div>
+      <div class="tile tile--alpha" data-src='./videos/03/preprocess_happy-dog-running-in-sunny-cambridge-fields-32924777_foreground.mp4'><span class="tag">Foreground (RGBA)</span></div>
     </div>
 
     <h3 style="margin-bottom:16px">Construction pipeline</h3>
