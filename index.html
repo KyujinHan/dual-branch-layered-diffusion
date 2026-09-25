@@ -458,36 +458,45 @@ footer{border-top:1px solid var(--line); padding:34px 0; text-align:center; colo
 
   <h3>Video Object Insertion</h3>
   <div class="thumbstrip" id="ins-thumbs">
-      <button class="thumb tile active" data-src="./videos/05/insert/boat_first_frame.png" aria-label="Add Wooden Boat." onclick="pick('ins',this,'&quot;Add Wooden Boat.&quot;')"></button>
-      <button class="thumb tile" data-src="./videos/05/insert/car_first_frame.png" aria-label="Add Dusty Car." onclick="pick('ins',this,'&quot;Add Dusty Car.&quot;')"></button>
-      <button class="thumb tile" data-src="./videos/05/insert/baby_first_frame.png" aria-label="Add Baby Boss." onclick="pick('ins',this,'&quot;Add Baby Boss.&quot;')"></button>
-      <button class="thumb tile" data-src="./videos/05/insert/dog_first_frame.png" aria-label="Add Dog." onclick="pick('ins',this,'&quot;Add Dog.&quot;')"></button>
+      <button class="thumb tile active" data-src="./videos/05/insert/boat_first_frame.png" 
+        data-source="./videos/05/insert/example_3_resized.mp4"
+        data-edit="./videos/05/insert/boat_first_frame.png"
+        data-vace-inp-comp="./videos/05/insert/vace_inp_boat.mp4"
+        data-vace-c-comp="./videos/05/insert/vace_c_boat.mp4"
+        data-vace-f-comp="./videos/05/insert/vace_f_composite_boat.mp4"
+        data-vace-f-fg="./videos/05/insert/vace_f_boat_rgba.mp4"
+        data-ours-comp="./videos/05/insert/boat_composite.mp4"
+        data-ours-fg="./videos/05/insert/ours_rgba_boat.mp4"
+        aria-label="Add Wooden Boat." onclick="pick('ins',this,'&quot;Add Wooden Boat.&quot;')"></button>
+      <button class="thumb tile" data-src="./videos/05/insert/car_first_frame.png" aria-label="Add Dusty Car." onclick="pick('ins',this,'Add Dusty Car.')"></button>
+      <button class="thumb tile" data-src="./videos/05/insert/baby_first_frame.png" aria-label="Add Baby Boss." onclick="pick('ins',this,'Add Baby Boss.')"></button>
+      <button class="thumb tile" data-src="./videos/05/insert/dog_first_frame.png" aria-label="Add Dog." onclick="pick('ins',this,'Add Dog.')"></button>
     </div>
   <p class="excaption" id="ins-caption">"Add Wooden Boat."</p>
   <div class="cmp-row" style="margin:12px 0 8px">
     <div class="cmp-cell">
-      <div class="tile tile--src" data-src="assets/video/source_06.mp4"><span class="tag">Source video</span></div>
-      <div class="figure-slot frame"><span>🖼</span><span>Edited 1st frame E</span></div>
+      <div class="tile tile--src" data-src="./videos/05/insert/example_3_resized.mp4"><span class="tag">Source video</span></div>
+      <div class="figure-slot frame" data-src="./videos/05/insert/boat_first_frame.png"></div>
       <div class="name">Source video &amp; edited first frame</div>
     </div>
     <div class="cmp-cell">
-      <div class="tile tile--comp" data-src="assets/video/composite_12.mp4"><span class="tag">Composite</span></div>
+      <div class="tile tile--comp" data-src="./videos/05/insert/vace_inp_boat.mp4"><span class="tag">Composite</span></div>
       <div class="tile tile--na">No FG output</div>
       <div class="name">VACE-Inp</div>
     </div>
     <div class="cmp-cell">
-      <div class="tile tile--comp" data-src="assets/video/composite_13.mp4"><span class="tag">Composite</span></div>
+      <div class="tile tile--comp" data-src="./videos/05/insert/vace_c_boat.mp4"><span class="tag">Composite</span></div>
       <div class="tile tile--na">No FG output</div>
       <div class="name">VACE-C</div>
     </div>
     <div class="cmp-cell">
-      <div class="tile tile--comp" data-src="assets/video/composite_14.mp4"><span class="tag">Composite</span></div>
-      <div class="tile tile--alpha" data-src="assets/video/foreground_12.mp4"><span class="tag">FG layer</span></div>
+      <div class="tile tile--comp" data-src="./videos/05/insert/vace_f_composite_boat.mp4"><span class="tag">Composite</span></div>
+      <div class="tile tile--alpha" data-src="./videos/05/insert/vace_f_boat_rgba.mp4"><span class="tag">FG layer</span></div>
       <div class="name">VACE-F</div>
     </div>
     <div class="cmp-cell ours">
-      <div class="tile tile--comp" data-src="assets/video/composite_15.mp4"><span class="tag">Composite</span></div>
-      <div class="tile tile--alpha" data-src="assets/video/foreground_13.mp4"><span class="tag">FG layer</span></div>
+      <div class="tile tile--comp" data-src="./videos/05/insert/boat_composite.mp4"><span class="tag">Composite</span></div>
+      <div class="tile tile--alpha" data-src="./videos/05/insert/ours_rgba_boat.mp4"><span class="tag">FG layer</span></div>
       <div class="name">DBL-Insert (Ours)</div>
     </div>
   </div>
