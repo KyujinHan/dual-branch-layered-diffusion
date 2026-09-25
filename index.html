@@ -351,18 +351,26 @@ footer{border-top:1px solid var(--line); padding:34px 0; text-align:center; colo
     </div>
 
     <div class="thumbstrip" id="tri-thumbs">
-      <button class="thumb tile active" data-src="./videos/03/dog_first_frame.png" aria-label="Dog on the beach" onclick="pick('tri',this,'Dog running on the beach')"></button>
-      <button class="thumb tile" data-src="./videos/03/lion_first_frame.png" aria-label="Cyclist in the city" onclick="pick('tri',this,'Cyclist riding through the city')"></button>
-      <button class="thumb tile" data-src="./videos/03/woman_first_frame.png" aria-label="Kayak on the river" onclick="pick('tri',this,'Kayak paddling down the river')"></button>
-      <button class="thumb tile" data-src="./videos/03/man_first_frame.png" aria-label="Skateboarder at the park" onclick="pick('tri',this,'Skateboarder at the park')"></button>
-      <button class="thumb tile" data-src="./videos/03/swan_first_frame.png" aria-label="Person with an umbrella" onclick="pick('tri',this,'Pedestrian with an umbrella')"></button>
-      <button class="thumb tile" data-src="./videos/03/woman_2_first_frame.png" aria-label="Horse rider on the trail" onclick="pick('tri',this,'Horse and rider on a forest trail')"></button>
+      <button class="thumb tile active" data-src="./videos/03/dog_first_frame.png"
+              data-comp="./videos/03/preprocess_happy-dog-running-in-sunny-cambridge-fields-32924777.mp4"
+              data-bg="./videos/03/preprocess_happy-dog-running-in-sunny-cambridge-fields-32924777_bg_refine_agbi.mp4"
+              data-fg="./videos/03/preprocess_happy-dog-running-in-sunny-cambridge-fields-32924777_foreground.mp4"
+              aria-label="Dog" onclick="pick('tri',this,'Happy dog running in sunny cambridge fields.')"></button>
+      <button class="thumb tile" 
+              data-comp="./videos/03/RGB_preprocess_majestic-lion-in-african-savannah-during-day-30280654.mp4"
+              data-bg="./videos/03/preprocess_majestic-lion-in-african-savannah-during-day-30280654_bg_refine_agbi.mp4"
+              data-fg="./videos/03/RGBA_preprocess_majestic-lion-in-african-savannah-during-day-30280654.mp4"
+              aria-label="lion" onclick="pick('tri',this,'Majestic lion in african savannah during day.')"></button>
+      <button class="thumb tile" data-src="./videos/03/woman_first_frame.png" aria-label="Kayak on the river" onclick="pick('tri',this,'Athletic woman stretching outdoors.')"></button>
+      <button class="thumb tile" data-src="./videos/03/man_first_frame.png" aria-label="Skateboarder at the park" onclick="pick('tri',this,'Man wearing sportswear exercising.')"></button>
+      <button class="thumb tile" data-src="./videos/03/swan_first_frame.png" aria-label="Person with an umbrella" onclick="pick('tri',this,'Black swan floating on a lake.')"></button>
+      <button class="thumb tile" data-src="./videos/03/woman_2_first_frame.png" aria-label="Horse rider on the trail" onclick="pick('tri',this,'Woman walking down the stairs.')"></button>
     </div>
     <p class="excaption" id="tri-caption">Happy dog running in sunny cambridge fields.</p>
-    <div class="triplet" style="margin-bottom:10px">
-      <div class="tile tile--comp" data-src="./videos/03/preprocess_happy-dog-running-in-sunny-cambridge-fields-32924777.mp4"><span class="tag">Composite</span></div>
-      <div class="tile tile--bg" data-src="./videos/03/preprocess_happy-dog-running-in-sunny-cambridge-fields-32924777_bg_refine_agbi.mp4"><span class="tag">Background</span></div>
-      <div class="tile tile--alpha" data-src="./videos/03/preprocess_happy-dog-running-in-sunny-cambridge-fields-32924777_foreground.mp4"><span class="tag">Foreground (RGBA)</span></div>
+    <div class="triplet" id="tri-triplet" style="margin-bottom:10px">
+      <div class="tile tile--comp"><span class="tag">Composite</span></div>
+      <div class="tile tile--bg"><span class="tag">Background</span></div>
+      <div class="tile tile--alpha"><span class="tag">Foreground (RGBA)</span></div>
     </div>
 
     <h3 style="margin-bottom:16px">Construction pipeline</h3>
@@ -670,6 +678,7 @@ function hydrateMedia(){
   document.querySelectorAll('[data-src]').forEach(mountMedia);
 }
 
+<!--
 function pick(group, el, text){
   var strip = el.parentElement;
   var thumbs = strip.querySelectorAll('.thumb');
@@ -677,6 +686,59 @@ function pick(group, el, text){
   el.classList.add('active');
   var cap = document.getElementById(group+'-caption');
   if(cap){ cap.textContent = text.replace(/&quot;/g,'"'); }
+}
+-->
+function pick(group, el, text){
+  // 1. thumbnail active state
+  var strip = el.parentElement;
+  var thumbs = strip.querySelectorAll('.thumb');
+
+  for(var i=0; i<thumbs.length; i++){
+    thumbs[i].classList.remove('active');
+  }
+  el.classList.add('active');
+
+  // 2. caption
+  var cap = document.getElementById(group + '-caption');
+  if(cap){
+    cap.textContent = text.replace(/&quot;/g,'"');
+  }
+
+  // 3. change videos
+  if(group === 'tri'){
+    var triplet = document.getElementById('tri-triplet');
+    var comp = triplet.querySelector('.tile--comp');
+    var bg   = triplet.querySelector('.tile--bg');
+    var fg   = triplet.querySelector('.tile--alpha');
+
+    comp.setAttribute('data-src', el.dataset.comp);
+    bg.setAttribute('data-src', el.dataset.bg);
+    fg.setAttribute('data-src', el.dataset.fg);
+
+    updateMedia(comp);
+    updateMedia(bg);
+    updateMedia(fg);
+  }
+}
+
+function updateMedia(el){
+  var src = el.dataset.src;
+  if(!src) return;
+
+  var oldMedia = el.querySelector('.media-element');
+  if(oldMedia){
+    oldMedia.remove();
+  }
+
+  var video = document.createElement('video');
+  video.className = 'media-element';
+  video.src = src;
+  video.autoplay = true;
+  video.muted = true;
+  video.loop = true;
+  video.playsInline = true;
+
+  el.prepend(video);
 }
 
 document.addEventListener('DOMContentLoaded', hydrateMedia);
