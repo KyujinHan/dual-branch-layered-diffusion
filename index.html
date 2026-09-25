@@ -732,12 +732,12 @@ footer{border-top:1px solid var(--line); padding:34px 0; text-align:center; colo
         data-fg="./videos/07/Insert/ours_iclr_foreground.mp4"
         data-comp="./videos/07/Insert/iclr_composite.mp4"
         aria-label="Add bicycle" onclick="pick('gal-ins',this,'&quot;Add ICLR.&quot;')"></button>
-      <button class="thumb tile" data-src="./videos/07/Insert/ex2_vfx_first_frame.png" 
+      <button class="thumb tile" data-src="./videos/07/Insert/ex2_vfx_first_frame.jpg" 
         data-bg="./videos/07/Insert/background_6.mp4"
         data-fg="./videos/07/Insert/ex2_rgba_ours.mp4"
         data-comp="./videos/07/Insert/ex2_composite_ours.mp4"
         aria-label="Add umbrella" onclick="pick('gal-ins',this,'&quot;Add Fire.&quot;')"></button>
-      <button class="thumb tile" data-src="./videos/07/Insert/first_frame_035_Left_water.png" 
+      <button class="thumb tile" data-src="./videos/07/Insert/first_frame_035_Left_water.jpg" 
         data-bg="./videos/07/Insert/035_Left_water_plate.mp4"
         data-fg="./videos/07/Insert/ours_foreground.mp4"
         data-comp="./videos/07/Insert/ours_internal_composite.mp4"
@@ -887,6 +887,22 @@ function pick(group, el, text){
     updateMedia(comp);
     updateMedia(bg);
     updateMedia(fg);
+  }
+
+  if(group === 'gal-dec'){
+      var triplet = document.getElementById('more-dec');
+  
+      var comp = triplet.querySelector('.tile--comp');
+      var bg   = triplet.querySelector('.tile--bg');
+      var fg   = triplet.querySelector('.tile--alpha');
+  
+      comp.setAttribute('data-src', el.dataset.comp);
+      bg.setAttribute('data-src', el.dataset.bg);
+      fg.setAttribute('data-src', el.dataset.fg);
+  
+      updateMedia(comp);
+      updateMedia(bg);
+      updateMedia(fg);
   }
 
   if(group === 'ins'){
