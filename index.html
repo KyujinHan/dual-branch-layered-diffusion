@@ -644,30 +644,36 @@ footer{border-top:1px solid var(--line); padding:34px 0; text-align:center; colo
       <h3 style="margin-bottom:6px">Background refinement — dataset quality</h3>
       <p class="muted">Object-removal models leave afterimage / ghosting artifacts. AGBI applies source-appearance-guided inpainting with a two-stage mask (bounding-box, then object-level) to clean the background <em>before</em> it becomes training supervision.</p>
       <p class="note" style="margin:12px 0 4px">Example 1</p>
-      <div class="grid2">
-        <div class="tile tile--bg" style="opacity:.65"><span class="tag">Before AGBI (residual artifacts)</span></div>
-        <div class="tile tile--bg" data-src="assets/video/background_10.mp4"><span class="tag">After AGBI (refined)</span></div>
+      <div class="grid3">
+        <div class="tile tile--comp" data-src="./videos/06/dataset_quality/preprocess_a-man-jogging-in-the-street-near-the-lake-4065465.mp4"><span class="tag">Composite (input)</span></div>
+        <div class="tile tile--bg" data-src="./videos/06/dataset_quality/ROSE_preprocess_a-man-jogging-in-the-street-near-the-lake-4065465.mp4"><span class="tag">Before AGBI (residual artifacts)</span></div>
+        <div class="tile tile--bg" data-src="./videos/06/dataset_quality/preprocess_a-man-jogging-in-the-street-near-the-lake-4065465_bg_refine_agbi.mp4"><span class="tag">After AGBI (refined)</span></div>
       </div>
       <p class="note" style="margin:14px 0 4px">Example 2</p>
-      <div class="grid2">
-        <div class="tile tile--bg" style="opacity:.65"><span class="tag">Before AGBI (residual artifacts)</span></div>
-        <div class="tile tile--bg" data-src="assets/video/background_11.mp4"><span class="tag">After AGBI (refined)</span></div>
+      <div class="grid3">
+        <div class="tile tile--comp" data-src="./videos/06/dataset_quality/preprocess_a-group-of-people-walking-down-a-road-with-backpacks-27907400.mp4"><span class="tag">Composite (input)</span></div>
+        <div class="tile tile--bg" data-src="./videos/06/dataset_quality/ROSE_preprocess_a-group-of-people-walking-down-a-road-with-backpacks-27907400.mp4"><span class="tag">Before AGBI (residual artifacts)</span></div>
+        <div class="tile tile--bg" data-src="./videos/06/dataset_quality/preprocess_a-group-of-people-walking-down-a-road-with-backpacks-27907400_bg_refine_agbi.mp4"><span class="tag">After AGBI (refined)</span></div>
       </div>
     </div>
     <div class="card">
       <h3 style="margin-bottom:6px">Background refinement — model reconstruction quality</h3>
       <p class="muted">Training on AGBI-refined backgrounds, rather than raw object-removal output, changes what the trained model reconstructs at inference:</p>
       <p class="note" style="margin:12px 0 4px">Example 1</p>
-      <div class="grid2">
-        <div class="tile tile--bg" style="opacity:.65"><span class="tag">Trained w/o refined BG</span></div>
-        <div class="tile tile--bg" data-src="assets/video/background_12.mp4"><span class="tag">Trained w/ refined BG</span></div>
+      <div class="grid3">
+        <div class="tile tile--comp" data-src="./videos/06/model_quality/preprocess_man-walking-and-looking-at-camera-8496459.mp4"><span class="tag">Composite (input)</span></div>
+        <div class="tile tile--bg" data-src="./videos/06/model_quality/ex3_before.mp4"><span class="tag">Before AGBI (residual artifacts)</span></div>
+        <div class="tile tile--bg" data-src="./videos/06/model_quality/ex3_ours.mp4"><span class="tag">After AGBI (refined)</span></div>
       </div>
       <p class="note" style="margin:14px 0 4px">Example 2</p>
-      <div class="grid2">
-        <div class="tile tile--bg" style="opacity:.65"><span class="tag">Trained w/o refined BG</span></div>
-        <div class="tile tile--bg" data-src="assets/video/background_13.mp4"><span class="tag">Trained w/ refined BG</span></div>
+      <div class="grid3">
+        <div class="tile tile--comp" data-src="./videos/06/model_quality/preprocess_a-black-dog-laying-down-with-its-tongue-out-19201626.mp4"><span class="tag">Composite (input)</span></div>
+        <div class="tile tile--bg" data-src="./videos/06/model_quality/ex1_before.mp4"><span class="tag">Before AGBI (residual artifacts)</span></div>
+        <div class="tile tile--bg" data-src="./videos/06/model_quality/ex1_ours.mp4"><span class="tag">After AGBI (refined)</span></div>
       </div>
+      <!--
       <p class="note" style="margin-top:10px">Without refined training backgrounds, DBL-Decompose tends to reproduce residual traces of the removed object; with AGBI-refined supervision, backgrounds come out cleaner with substantially fewer artifacts (full numbers in the paper's supplementary Table S7).</p>
+      -->
     </div>
   </div>
 </section>
