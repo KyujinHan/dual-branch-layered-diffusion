@@ -230,10 +230,10 @@ footer{border-top:1px solid var(--line); padding:34px 0; text-align:center; colo
   <div class="btnrow">
     <!-- Replace each href with your actual resource URL. -->
     <a class="btn primary" href="#">Paper PDF</a>
-    <a class="btn" href="#">Code</a>
+    <a class="btn" href="https://github.com/KyujinHan/DBL-Diffusion">Code</a>
     <a class="btn" href="#">🤗TriLayer Dataset</a>
     <a class="btn" href="#">🤗Weights</a>
-    <a class="btn" href="#">Supple. Video</a>
+    <a class="btn" href="https://www.youtube.com/embed/Q5SmYOrzfUg?si=v1jEPfnoLg-wMPFG">Supple. Video</a>
   </div>
   <div class="note">🤗We will publicly release the code, dataset, and pretrained models upon paper acceptance.🤗</div>
 </header>
@@ -634,7 +634,7 @@ footer{border-top:1px solid var(--line); padding:34px 0; text-align:center; colo
     <h2>What each design choice buys you</h2>
   </div>
 
-  <h3>LoRA vs. DoRA per branch</h3>
+  <h3>LoRA vs. DoRA training strategy</h3>
   <p class="muted" style="max-width:640px">The RGB branch stays close to the pretrained latent space, so LoRA is enough; the RGBA branch has to learn an out-of-domain concept (transparency), where DoRA's decoupled magnitude/direction update adapts more stably.</p>
   <div class="table-wrap" style="margin:14px 0 36px">
     <table>
@@ -799,7 +799,7 @@ footer{border-top:1px solid var(--line); padding:34px 0; text-align:center; colo
 <section id="appendix" class="section wrap">
   <div class="section-head">
     <div class="eyebrow">08 - Appendix: More Quantitative Results</div>
-    <h2>Appendix: Perceuptual Evaluations</h2>
+    <h2>Appendix — perceuptual evaluations</h2>
   </div>
 
   <h3>(1) Fréchet Inception Distance(↓)</h3>
@@ -813,7 +813,7 @@ footer{border-top:1px solid var(--line); padding:34px 0; text-align:center; colo
     </table>
   </div>
 
-  <h3>(2) Human Preference Study: Video Object Insertion</h3>
+  <h3>(2) Human preference study — video object insertion</h3>
   <p class="muted">DBL-Insert is consistently preferred over all competing methods across every evaluation criterion, demonstrating superior insertion quality and better alignment with the intended editing objective.</p>
   <div class="table-wrap" style="margin:14px 0 36px">
     <table>
@@ -827,7 +827,7 @@ footer{border-top:1px solid var(--line); padding:34px 0; text-align:center; colo
     </table>
   </div>
   
-  <h3>(3) Human Preference Study: Video Layer Decomposition</h3>
+  <h3>(3) Human preference study — video layer decomposition</h3>
   <p class="muted">DBL-Decompose receives the highest preference for both background and foreground reconstruction by a large margin, indicating that our explicit layer modeling produces more visually plausible decomposed layers than existing methods.</p>
   <div class="table-wrap" style="margin:14px 0 36px">
     <table>
@@ -838,7 +838,7 @@ footer{border-top:1px solid var(--line); padding:34px 0; text-align:center; colo
     </table>
   </div>
 
-  <h3>(4) Supplementary Video</h3>
+  <h3>(4) Supplementary video</h3>
   <p class="muted">The supplementary video showcases more qualitative examples and ablations, along with various applications including layer-based video editing, scene-aware video editing, and other applications enabled by our layered video representation.</p>
   <div class="wrap" style="padding-bottom:8px">
     <div class="figure-slot teaser">
