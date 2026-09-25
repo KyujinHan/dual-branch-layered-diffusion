@@ -618,7 +618,7 @@ footer{border-top:1px solid var(--line); padding:34px 0; text-align:center; colo
       <tr class="hl"><td>DBL-Decompose</td><td>33.42</td><td>0.017</td><td>0.971</td><td>38.78</td><td>0.021</td><td>0.977</td></tr>
     </table>
   </div>
-  <p class="note">Reconstruction-based, per-scene optimization methods (top group) score highest on raw pixel fidelity, since they directly optimize to reproduce the input rather than generate a plausible layer. Among generation-based diffusion methods (bottom group), DBL-Decompose is best on every metric.</p>
+  <p class="note">While reconstruction-oriented methods such as Gen-Omnimatte and OmnimatteZero achieve higher PSNR/SSIM/LPIPS scores, this is expected since they are explicitly designed to reconstruct the input video by optimizing pixel-level fidelity or preserving latent representations through attention masking.<br>In contrast, DBL-Decompose leverages diffusion priors to generate perceptually plausible and visually coherent background layers rather than directly reproducing the ground-truth frames. Morevoer, our method produces cleaner and more realistic backgrounds while maintaining high-quality foreground layers with accurate object boundaries and scene-dependent effects.</p>
 </section>
 
 <section id="ablation" class="section wrap">
