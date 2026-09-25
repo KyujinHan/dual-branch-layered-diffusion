@@ -468,12 +468,39 @@ footer{border-top:1px solid var(--line); padding:34px 0; text-align:center; colo
         data-ours-comp="./videos/05/insert/boat_composite.mp4"
         data-ours-fg="./videos/05/insert/ours_rgba_boat.mp4"
         aria-label="Add Wooden Boat." onclick="pick('ins',this,'&quot;Add Wooden Boat.&quot;')"></button>
-      <button class="thumb tile" data-src="./videos/05/insert/car_first_frame.png" aria-label="Add Dusty Car." onclick="pick('ins',this,'Add Dusty Car.')"></button>
-      <button class="thumb tile" data-src="./videos/05/insert/baby_first_frame.png" aria-label="Add Baby Boss." onclick="pick('ins',this,'Add Baby Boss.')"></button>
-      <button class="thumb tile" data-src="./videos/05/insert/dog_first_frame.png" aria-label="Add Dog." onclick="pick('ins',this,'Add Dog.')"></button>
+      <button class="thumb tile" data-src="./videos/05/insert/car_first_frame.png" 
+        data-source="./videos/05/insert/example_12_resized.mp4"
+        data-edit="./videos/05/insert/car_first_frame.png"
+        data-vace-inp-comp="./videos/05/insert/vace_inp_car.mp4"
+        data-vace-c-comp="./videos/05/insert/vace_c_car.mp4"
+        data-vace-f-comp="./videos/05/insert/vace_f_composite_car.mp4"
+        data-vace-f-fg="./videos/05/insert/vace_f_car_rgba.mp4"
+        data-ours-comp="./videos/05/insert/ex3_ours_foreground.mp4"
+        data-ours-fg="./videos/05/insert/car_composite.mp4"
+        aria-label="Add Dusty Car." onclick="pick('ins',this,'Add Dusty Car.')"></button>
+      <button class="thumb tile" data-src="./videos/05/insert/baby_first_frame.png" 
+        data-source="./videos/05/insert/example_1_resized.mp4"
+        data-edit="./videos/05/insert/baby_first_frame.png"
+        data-vace-inp-comp="./videos/05/insert/vace_inp_baby.mp4"
+        data-vace-c-comp="./videos/05/insert/vace_voi_baby.mp4"
+        data-vace-f-comp="./videos/05/insert/vace_f_baby_composite.mp4"
+        data-vace-f-fg="./videos/05/insert/vace_f_baby_rgba.mp4"
+        data-ours-comp="./videos/05/insert/ours_rgba_baby.mp4"
+        data-ours-fg="./videos/05/insert/ours_composite_baby.mp4"
+        aria-label="Add Baby Boss." onclick="pick('ins',this,'Add Baby Boss.')"></button>
+      <button class="thumb tile" data-src="./videos/05/insert/dog_first_frame.png" 
+        data-source="./videos/05/insert/example_4_resized.mp4"
+        data-edit="./videos/05/insert/dog_first_frame.png"
+        data-vace-inp-comp="./videos/05/insert/vace_inp_dog.mp4"
+        data-vace-c-comp="./videos/05/insert/vace_c_dog.mp4"
+        data-vace-f-comp="./videos/05/insert/vace_f_dog_composite.mp4"
+        data-vace-f-fg="./videos/05/insert/vace_f_dog_rgba.mp4"
+        data-ours-comp="./videos/05/insert/ours_dog_composite.mp4"
+        data-ours-fg="./videos/05/insert/ours_dog_rgba.mp4"
+        aria-label="Add Dog." onclick="pick('ins',this,'Add Dog.')"></button>
     </div>
   <p class="excaption" id="ins-caption">"Add Wooden Boat."</p>
-  <div class="cmp-row" style="margin:12px 0 8px">
+  <div class="cmp-row" id="ins-results" style="margin:12px 0 8px">
     <div class="cmp-cell">
       <div class="tile tile--src" data-src="./videos/05/insert/example_3_resized.mp4"><span class="tag">Source video</span></div>
       <div class="figure-slot frame" data-src="./videos/05/insert/boat_first_frame.png"></div>
@@ -743,6 +770,32 @@ function pick(group, el, text){
     updateMedia(comp);
     updateMedia(bg);
     updateMedia(fg);
+  }
+
+  if(group === 'ins'){
+      var results = document.getElementById('ins-results');
+  
+      var source = results.querySelector('.tile--src');
+      var comp1 = results.querySelectorAll('.tile--comp')[0];
+      var comp2 = results.querySelectorAll('.tile--comp')[1];
+      var comp3 = results.querySelectorAll('.tile--comp')[2];
+  
+      var fg1 = results.querySelectorAll('.tile--alpha')[0];
+      var fg2 = results.querySelectorAll('.tile--alpha')[1];
+  
+      source.setAttribute('data-src', el.dataset.source);
+      comp1.setAttribute('data-src', el.dataset.vaceInpComp);
+      comp2.setAttribute('data-src', el.dataset.vaceCComp);
+      comp3.setAttribute('data-src', el.dataset.vaceFComp);
+      fg1.setAttribute('data-src', el.dataset.vaceFFg);
+      fg2.setAttribute('data-src', el.dataset.oursFg);
+  
+      updateMedia(source);
+      updateMedia(comp1);
+      updateMedia(comp2);
+      updateMedia(comp3);
+      updateMedia(fg1);
+      updateMedia(fg2);
   }
 }
 
