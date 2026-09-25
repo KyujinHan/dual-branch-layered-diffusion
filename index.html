@@ -475,8 +475,8 @@ footer{border-top:1px solid var(--line); padding:34px 0; text-align:center; colo
         data-vace-c-comp="./videos/05/insert/vace_c_car.mp4"
         data-vace-f-comp="./videos/05/insert/vace_f_composite_car.mp4"
         data-vace-f-fg="./videos/05/insert/vace_f_car_rgba.mp4"
-        data-ours-comp="./videos/05/insert/ex3_ours_foreground.mp4"
-        data-ours-fg="./videos/05/insert/car_composite.mp4"
+        data-ours-comp="./videos/05/insert/car_composite.mp4"
+        data-ours-fg="./videos/05/insert/ex3_ours_foreground.mp4"
         aria-label="Add Dusty Car." onclick="pick('ins',this,'Add Dusty Car.')"></button>
       <button class="thumb tile" data-src="./videos/05/insert/baby_first_frame.png" 
         data-source="./videos/05/insert/example_1_resized.mp4"
@@ -485,8 +485,8 @@ footer{border-top:1px solid var(--line); padding:34px 0; text-align:center; colo
         data-vace-c-comp="./videos/05/insert/vace_voi_baby.mp4"
         data-vace-f-comp="./videos/05/insert/vace_f_baby_composite.mp4"
         data-vace-f-fg="./videos/05/insert/vace_f_baby_rgba.mp4"
-        data-ours-comp="./videos/05/insert/ours_rgba_baby.mp4"
-        data-ours-fg="./videos/05/insert/ours_composite_baby.mp4"
+        data-ours-comp="./videos/05/insert/ours_composite_baby.mp4"
+        data-ours-fg="./videos/05/insert/ours_rgba_baby.mp4"
         aria-label="Add Baby Boss." onclick="pick('ins',this,'Add Baby Boss.')"></button>
       <button class="thumb tile" data-src="./videos/05/insert/dog_first_frame.png" 
         data-source="./videos/05/insert/example_4_resized.mp4"
@@ -819,6 +819,7 @@ function pick(group, el, text){
   }
 }
 
+<!--
 function updateMedia(el){
   var src = el.dataset.src;
   if(!src) return;
@@ -837,6 +838,47 @@ function updateMedia(el){
   video.playsInline = true;
 
   el.prepend(video);
+}
+-->
+function updateMedia(el){
+  var src = el.dataset.src;
+  if(!src) return;
+
+  // 기존 media 제거
+  var oldMedia = el.querySelector('.media-element');
+  if(oldMedia){
+    oldMedia.remove();
+  }
+
+  var ext = src.split('?')[0].split('.').pop().toLowerCase();
+  var media;
+
+  // Image
+  if(['png', 'jpg', 'jpeg', 'webp', 'gif'].includes(ext)){
+    media = document.createElement('img');
+    media.className = 'media-element';
+    media.src = src;
+    media.alt = '';
+  }
+
+  // Video
+  else if(['mp4', 'webm', 'ogg', 'mov'].includes(ext)){
+    media = document.createElement('video');
+    media.className = 'media-element';
+    media.src = src;
+    media.autoplay = true;
+    media.muted = true;
+    media.loop = true;
+    media.playsInline = true;
+  }
+
+  // 지원하지 않는 파일
+  else{
+    console.warn('Unsupported media type:', src);
+    return;
+  }
+
+  el.prepend(media);
 }
 
 document.addEventListener('DOMContentLoaded', hydrateMedia);
