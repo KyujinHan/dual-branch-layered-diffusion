@@ -542,27 +542,59 @@ footer{border-top:1px solid var(--line); padding:34px 0; text-align:center; colo
 
   <h3>Video Layer Decomposition</h3>
   <div class="thumbstrip" id="dec-thumbs">
-      <button class="thumb tile active" data-src="./videos/05/decompose/sheep_first_frame" aria-label="Decompose Sheep." onclick="pick('dec',this,'&quot;Decompose Sheep.&quot;')"></button>
-      <button class="thumb tile" data-src="./videos/05/decompose/woman_first_frame.png" aria-label="Decompose Woman." onclick="pick('dec',this,'&quot;Decompose Woman.&quot;')"></button>
-      <button class="thumb tile" data-src="./videos/05/decompose/pelican_first_frame.png" aria-label="Decompose Pelican." onclick="pick('dec',this,'&quot;Decompose Pelican.&quot;')"></button>
-      <button class="thumb tile" data-src="./videos/05/decompose/turtle_first_frame.png" aria-label="Decompose Turtle." onclick="pick('dec',this,'&quot;Decompose Turtle.&quot;')"></button>
+      <button class="thumb tile active" data-src="./videos/05/decompose/sheep_first_frame.png" 
+        data-source="./videos/05/decompose/preprocess_video-of-sheep-walking-854929.mp4"
+        data-gen-bg="./videos/05/decompose/gen_omnimatte_sheep_bg.mp4"
+        data-gen-fg="./videos/05/decompose/gen_omnimatte_sheep_fg.mp4"
+        data-zero-bg="./videos/05/decompose/omnimattezero_sheep_bg.mp4"
+        data-zero-fg="./videos/05/decompose/omnimattezero_sheep_fg.mp4"
+        data-ours-bg="./videos/05/decompose/ours_background_sheep.mp4"
+        data-ours-fg="./videos/05/decompose/ours_foreground_sheep.mp4"
+        aria-label="Decompose Sheep." onclick="pick('dec',this,'Decompose Sheep.')"></button>
+      <button class="thumb tile" data-src="./videos/05/decompose/woman_first_frame.png" 
+        data-source="./videos/05/decompose/preprocess_walking-outdoors-india-family-4441002.mp4"
+        data-gen-bg="./videos/05/decompose/gen_omnimatte_bg_india.mp4"
+        data-gen-fg="./videos/05/decompose/gen_omnimatte_woman_fg.mp4"
+        data-zero-bg="./videos/05/decompose/omnimattezero_bg_india.mp4"
+        data-zero-fg="./videos/05/decompose/omnimattezero_woman_fg.mp4"
+        data-ours-bg="./videos/05/decompose/ours_background_woman.mp4"
+        data-ours-fg="./videos/05/decompose/ours_woman_fg.mp4"
+        aria-label="Decompose Woman." onclick="pick('dec',this,'Decompose Woman.')"></button>
+      <button class="thumb tile" data-src="./videos/05/decompose/pelican_first_frame.png" 
+        data-source="./videos/05/decompose/preprocess_pelikan-19088902.mp4"
+        data-gen-bg="./videos/05/decompose/gen_omnimatte_pelican_bg.mp4"
+        data-gen-fg="./videos/05/decompose/gen_omnimatte_pelican_fg.mp4"
+        data-zero-bg="./videos/05/decompose/omnimattezero_pelican_bg.mp4"
+        data-zero-fg="./videos/05/decompose/omnimattezero_pelican_fg.mp4"
+        data-ours-bg="./videos/05/decompose/ours_pelican_bg.mp4"
+        data-ours-fg="./videos/05/decompose/ours_pelican_fg.mp4"
+        aria-label="Decompose Pelican." onclick="pick('dec',this,'Decompose Pelican.')"></button>
+      <button class="thumb tile" data-src="./videos/05/decompose/turtle_first_frame.png" 
+        data-source="./videos/05/decompose/preprocess_red-eared-slider-turtle-basking-on-rock-32781396.mp4"
+        data-gen-bg="./videos/05/decompose/gen_omnimatte_turtle_bg.mp4"
+        data-gen-fg="./videos/05/decompose/gen_omnimatte_turtle_fg.mp4"
+        data-zero-bg="./videos/05/decompose/omnimattezero_turtle_bg_v2.mp4"
+        data-zero-fg="./videos/05/decompose/omnimattezero_turtle_fg.mp4"
+        data-ours-bg="./videos/05/decompose/ours_background_turtle.mp4"
+        data-ours-fg="./videos/05/decompose/ours_turtle_fg.mp4"
+        aria-label="Decompose Turtle." onclick="pick('dec',this,'Decompose Turtle.')"></button>
     </div>
-  <p class="excaption" id="dec-caption">"Decompose turtle."</p>
-  <div class="cmp-row" style="margin:12px 0 8px">
-    <div class="cmp-cell"><div class="tile tile--comp" data-src="assets/video/composite_16.mp4"><span class="tag">Comp (input)</span></div><div class="name">Source</div></div>
+  <p class="excaption" id="dec-caption">"Decompose Sheep."</p>
+  <div class="cmp-row" id="dec-results" style="margin:12px 0 8px">
+    <div class="cmp-cell"><div class="tile tile--comp" data-src="./videos/05/decompose/preprocess_video-of-sheep-walking-854929.mp4"><span class="tag">Comp (input)</span></div><div class="name">Source</div></div>
     <div class="cmp-cell">
-      <div class="tile tile--bg" data-src="assets/video/background_07.mp4"><span class="tag">Background</span></div>
-      <div class="tile tile--alpha" data-src="assets/video/foreground_14.mp4"><span class="tag">FG layer</span></div>
+      <div class="tile tile--bg" data-src="./videos/05/decompose/gen_omnimatte_sheep_bg.mp4"><span class="tag">Background</span></div>
+      <div class="tile tile--alpha" data-src="./videos/05/decompose/gen_omnimatte_sheep_fg.mp4"><span class="tag">FG layer</span></div>
       <div class="name">Gen-Omnimatte</div>
     </div>
     <div class="cmp-cell">
-      <div class="tile tile--bg" data-src="assets/video/background_08.mp4"><span class="tag">Background</span></div>
-      <div class="tile tile--alpha" data-src="assets/video/foreground_15.mp4"><span class="tag">FG layer</span></div>
+      <div class="tile tile--bg" data-src="./videos/05/decompose/omnimattezero_sheep_bg.mp4"><span class="tag">Background</span></div>
+      <div class="tile tile--alpha" data-src="./videos/05/decompose/omnimattezero_sheep_fg.mp4"><span class="tag">FG layer</span></div>
       <div class="name">OmnimatteZero</div>
     </div>
     <div class="cmp-cell ours">
-      <div class="tile tile--bg" data-src="assets/video/background_09.mp4"><span class="tag">Background</span></div>
-      <div class="tile tile--alpha" data-src="assets/video/foreground_16.mp4"><span class="tag">FG layer</span></div>
+      <div class="tile tile--bg" data-src="./videos/05/decompose/ours_background_sheep.mp4"><span class="tag">Background</span></div>
+      <div class="tile tile--alpha" data-src="./videos/05/decompose/ours_foreground_sheep.mp4"><span class="tag">FG layer</span></div>
       <div class="name">DBL-Decompose (Ours)</div>
     </div>
   </div>
@@ -816,6 +848,49 @@ function pick(group, el, text){
   
       updateMedia(fg1);
       updateMedia(fg2);
+  }
+
+  if(group === 'dec'){
+      var results = document.getElementById('dec-results');
+  
+      // Source composite
+      var source = results.querySelector('.tile--comp');
+  
+      // Backgrounds
+      var bgs = results.querySelectorAll('.tile--bg');
+      var genBg  = bgs[0];
+      var zeroBg = bgs[1];
+      var oursBg = bgs[2];
+  
+      // Foregrounds
+      var fgs = results.querySelectorAll('.tile--alpha');
+      var genFg  = fgs[0];
+      var zeroFg = fgs[1];
+      var oursFg = fgs[2];
+  
+      // Update paths
+      source.setAttribute('data-src', el.dataset.source);
+  
+      genBg.setAttribute('data-src', el.dataset.genBg);
+      genFg.setAttribute('data-src', el.dataset.genFg);
+  
+      zeroBg.setAttribute('data-src', el.dataset.zeroBg);
+      zeroFg.setAttribute('data-src', el.dataset.zeroFg);
+  
+      oursBg.setAttribute('data-src', el.dataset.oursBg);
+      oursFg.setAttribute('data-src', el.dataset.oursFg);
+  
+      // Remount media
+      updateMedia(source);
+  
+      updateMedia(genBg);
+      updateMedia(genFg);
+  
+      updateMedia(zeroBg);
+      updateMedia(zeroFg);
+  
+      updateMedia(oursBg);
+      updateMedia(oursFg);
   }
 }
 
