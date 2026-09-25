@@ -122,6 +122,12 @@ nav.top .wrap{display:flex; align-items:center; justify-content:space-between; h
 .figure-slot{position:relative; border:1px dashed var(--line); border-radius:16px; background:repeating-linear-gradient(135deg,var(--card2),var(--card2) 10px,#1c222a 10px,#1c222a 20px); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; color:var(--muted); font-family:var(--mono); font-size:.78rem; text-align:center; padding:20px;}
 .figure-slot .playbig{width:54px; height:54px; border-radius:50%; background:var(--green); color:#08150F; display:flex; align-items:center; justify-content:center; font-size:1rem}
 .figure-slot.teaser{aspect-ratio:21/9}
+.figure-slot.teaser iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
 .figure-slot.wide {
   position: relative !important;
   display: block !important;
@@ -775,7 +781,7 @@ footer{border-top:1px solid var(--line); padding:34px 0; text-align:center; colo
     <h2>Appendix: Perceuptual Evaluations</h2>
   </div>
 
-  <h3>(1) Fréchet Inception Distance</h3>
+  <h3>(1) Fréchet Inception Distance(↓)</h3>
   <p class="muted">DBL-Decompose achieves the superior perceptual fidelity for both foreground and background, as evidenced by consistently lower FID and more visually plausible results.</p>
   <div class="table-wrap" style="margin:14px 0 36px">
     <table>
@@ -809,6 +815,18 @@ footer{border-top:1px solid var(--line); padding:34px 0; text-align:center; colo
       <tr><td>OmnimatteZero</td><td>20.5%</td><td>6.0%</td></tr>
       <tr class="hl"><td>DBL-Decompose</td><td>71.5%</td><td>75.0%</td></tr>
     </table>
+  </div>
+
+  <h3>(4) Supplementary Video</h3>
+  <div class="wrap" style="padding-bottom:8px">
+    <div class="figure-slot teaser">
+      <iframe
+        src="https://www.youtube.com/embed/ABC123?autoplay=1&mute=1&loop=1&playlist=ABC123"
+        title="Teaser video"
+        allow="autoplay; encrypted-media"
+        allowfullscreen>
+    </iframe>
+    </div>
   </div>
 </section>
   
