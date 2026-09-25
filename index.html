@@ -527,7 +527,7 @@ footer{border-top:1px solid var(--line); padding:34px 0; text-align:center; colo
       <div class="name">DBL-Insert (Ours)</div>
     </div>
   </div>
-  <p class="note" style="margin-bottom:20px">Row 1 is each method's composite output, row 2 its explicit foreground layer. VACE-Inp / VACE-C predict a composite directly and never expose a separate layer;<br>VACE-F and DBL-Insert both learn a foreground layer, so their composite shown here is obtained by alpha-blending that layer onto the background.<br>VACE-Inp cannot synthesize object-induced effects beyond the masked region, while VACE-C and VACE-F show unstable effects and background appearance changes. DBL-Insert jointly synthesizes explicit foreground layers and scene-consistent composites for more reliable integration.</p>
+  <p class="note" style="margin-bottom:20px">Row 1 is each method's composite output, row 2 its explicit foreground layer. VACE-Inp / VACE-C predict a composite directly and never expose a separate layer; VACE-F and DBL-Insert both learn a foreground layer, so their composite shown here is obtained by alpha-blending that layer onto the background.<br>VACE-Inp cannot synthesize object-induced effects beyond the masked region, while VACE-C and VACE-F show unstable effects and background appearance changes.<br>DBL-Insert jointly synthesizes explicit foreground layers and scene-consistent composites for more reliable integration.</p>
   <div class="table-wrap" style="margin-bottom:36px">
     <table>
       <tr><th>Model</th><th>ViCLIP-T↑</th><th>BG Consist.↑</th><th>Subj. Consist.↑</th><th>Motion Smooth.↑</th><th>Aesthetic↑</th><th>Imaging Qual.↑</th><th>CLIP-I↑</th><th>DINO-I↑</th></tr>
