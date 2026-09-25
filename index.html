@@ -717,20 +717,36 @@ footer{border-top:1px solid var(--line); padding:34px 0; text-align:center; colo
   <div class="section-head">
     <div class="eyebrow">07 — Extended gallery</div>
     <h2>More qualitative examples</h2>
-    <p>A few additional clips beyond the ones highlighted in section 02 — pick a thumbnail to load it below.</p>
   </div>
 
   <h3 style="margin-bottom:14px">Video Layered Object Insertion — BG → FG + Composite</h3>
   <div class="thumbstrip" id="gal-ins-thumbs">
-      <button class="thumb tile active" data-src="assets/gallery/insert_thumb_01.jpg" aria-label="Add balloon" onclick="pick('gal-ins',this,'&quot;Add balloon.&quot;')"></button>
-      <button class="thumb tile" data-src="assets/gallery/insert_thumb_02.jpg" aria-label="Add bicycle" onclick="pick('gal-ins',this,'&quot;Add bicycle.&quot;')"></button>
-      <button class="thumb tile" data-src="assets/gallery/insert_thumb_03.jpg" aria-label="Add umbrella" onclick="pick('gal-ins',this,'&quot;Add umbrella.&quot;')"></button>
+      <button class="thumb tile active" data-src="./videos/07/Insert/first_frame_18_resized.png" 
+        data-bg="./videos/07/Insert/example_18_resized.mp4"
+        data-fg="./videos/07/Insert/ours_dragon_foreground.mp4"
+        data-comp="./videos/07/Insert/dragon_composite.mp4"
+        aria-label="Add balloon" onclick="pick('gal-ins',this,'&quot;Add Dragon.&quot;')"></button>
+      <button class="thumb tile" data-src="./videos/07/Insert/first_frame_19_resized.png" 
+        data-bg="./videos/07/Insert/example_19_resized.mp4"
+        data-fg="./videos/07/Insert/ours_iclr_foreground.mp4"
+        data-comp="./videos/07/Insert/iclr_composite.mp4"
+        aria-label="Add bicycle" onclick="pick('gal-ins',this,'&quot;Add ICLR.&quot;')"></button>
+      <button class="thumb tile" data-src="./videos/07/Insert/ex2_vfx_first_frame.png" 
+        data-bg="./videos/07/Insert/background_6.mp4"
+        data-fg="./videos/07/Insert/ex2_rgba_ours.mp4"
+        data-comp="./videos/07/Insert/ex2_composite_ours.mp4"
+        aria-label="Add umbrella" onclick="pick('gal-ins',this,'&quot;Add Fire.&quot;')"></button>
+      <button class="thumb tile" data-src="./videos/07/Insert/first_frame_035_Left_water.png" 
+        data-bg="./videos/07/Insert/035_Left_water_plate.mp4"
+        data-fg="./videos/07/Insert/ours_foreground.mp4"
+        data-comp="./videos/07/Insert/ours_internal_composite.mp4"
+        aria-label="Add umbrella" onclick="pick('gal-ins',this,'&quot;Add Raindrop.&quot;')"></button>
     </div>
-  <div class="excard" style="margin-bottom:40px">
+  <div class="excard" id="more-ins" style="margin-bottom:40px">
     <div class="grid3">
-      <div class="tile tile--src" data-src="assets/video/source_07.mp4"><span class="tag">BG</span></div>
-      <div class="tile tile--alpha" data-src="assets/video/foreground_17.mp4"><span class="tag">FG</span></div>
-      <div class="tile tile--comp" data-src="assets/video/composite_17.mp4"><span class="tag">Comp</span></div>
+      <div class="tile tile--src" data-src="./videos/07/Insert/example_18_resized.mp4"><span class="tag">BG</span></div>
+      <div class="tile tile--alpha" data-src="./videos/07/Insert/orus_dragon_foreground.mp4"><span class="tag">FG</span></div>
+      <div class="tile tile--comp" data-src="./videos/07/Insert/dragon_composite.mp4"><span class="tag">Comp</span></div>
     </div>
     <div class="excaption" id="gal-ins-caption">"Add balloon."</div>
   </div>
@@ -740,8 +756,9 @@ footer{border-top:1px solid var(--line); padding:34px 0; text-align:center; colo
       <button class="thumb tile active" data-src="assets/gallery/decompose_thumb_01.jpg" aria-label="Decompose kite" onclick="pick('gal-dec',this,'&quot;Decompose kite.&quot;')"></button>
       <button class="thumb tile" data-src="assets/gallery/decompose_thumb_02.jpg" aria-label="Decompose surfer" onclick="pick('gal-dec',this,'&quot;Decompose surfer.&quot;')"></button>
       <button class="thumb tile" data-src="assets/gallery/decompose_thumb_03.jpg" aria-label="Decompose horse" onclick="pick('gal-dec',this,'&quot;Decompose horse.&quot;')"></button>
+    <button class="thumb tile" data-src="assets/gallery/decompose_thumb_03.jpg" aria-label="Decompose horse" onclick="pick('gal-dec',this,'&quot;Decompose horse.&quot;')"></button>
     </div>
-  <div class="excard">
+  <div class="excard" id="more-dec">
     <div class="grid3">
       <div class="tile tile--comp" data-src="assets/video/composite_18.mp4"><span class="tag">Comp</span></div>
       <div class="tile tile--bg" data-src="assets/video/background_14.mp4"><span class="tag">BG</span></div>
@@ -845,6 +862,21 @@ function pick(group, el, text){
     var triplet = document.getElementById('tri-triplet');
     var comp = triplet.querySelector('.tile--comp');
     var bg   = triplet.querySelector('.tile--bg');
+    var fg   = triplet.querySelector('.tile--alpha');
+
+    comp.setAttribute('data-src', el.dataset.comp);
+    bg.setAttribute('data-src', el.dataset.bg);
+    fg.setAttribute('data-src', el.dataset.fg);
+
+    updateMedia(comp);
+    updateMedia(bg);
+    updateMedia(fg);
+  }
+
+  if(group === 'gal-ins'){
+    var triplet = document.getElementById('more-ins');
+    var comp = triplet.querySelector('.tile--comp');
+    var bg   = triplet.querySelector('.tile--src');
     var fg   = triplet.querySelector('.tile--alpha');
 
     comp.setAttribute('data-src', el.dataset.comp);
