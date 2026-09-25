@@ -534,8 +534,8 @@ footer{border-top:1px solid var(--line); padding:34px 0; text-align:center; colo
       <tr><td>AnyV2V</td><td>23.520</td><td>0.906</td><td>0.902</td><td>0.984</td><td>0.480</td><td>0.583</td><td>0.740</td><td>0.567</td></tr>
       <tr><td>ReVideo</td><td>24.303</td><td>0.926</td><td>0.934</td><td>0.991</td><td>0.511</td><td><strong>0.666</strong></td><td>0.764</td><td>0.699</td></tr>
       <tr><td>VACE-Inp</td><td>24.717</td><td>0.943</td><td>0.954</td><td>0.992</td><td>0.506</td><td>0.663</td><td>0.760</td><td>0.716</td></tr>
-      <tr><td>VACE-C</td><td>24.596</td><td>0.944</td><td>0.963</td><td>0.993</td><td>0.522</td><td>0.661</td><td>0.781</td><td>0.739</td></tr>
-      <tr><td>VACE-F</td><td>24.473</td><td>0.934</td><td>0.954</td><td>0.992</td><td><strong>0.534</strong></td><td>0.661</td><td>0.783</td><td>0.716</td></tr>
+      <tr><td>VACE-C</td><td>24.596</td><td>0.944</td><td><strong>0.963</strong></td><td><strong>0.993</strong></td><td>0.522</td><td>0.661</td><td>0.781</td><td>0.739</td></tr>
+      <tr><td>VACE-F</td><td>24.473</td><td>0.934</td><td>0.954</td><td>0.992</td><td>0.534</td><td>0.661</td><td>0.783</td><td>0.716</td></tr>
       <tr class="hl"><td>DBL-Insert</td><td><strong>24.794</strong></td><td><strong>0.948</strong></td><td><strong>0.963</strong></td><td><strong>0.993</strong></td><td>0.535</td><td>0.660</td><td><strong>0.791</strong></td><td><strong>0.748</strong></td></tr>
     </table>
   </div>
@@ -618,7 +618,7 @@ footer{border-top:1px solid var(--line); padding:34px 0; text-align:center; colo
       <tr class="hl"><td>DBL-Decompose</td><td>33.42</td><td>0.017</td><td>0.971</td><td>38.78</td><td>0.021</td><td>0.977</td></tr>
     </table>
   </div>
-  <p class="note">While reconstruction-oriented methods such as Gen-Omnimatte and OmnimatteZero achieve higher PSNR/SSIM/LPIPS scores, this is expected since they are explicitly designed to reconstruct the input video by optimizing pixel-level fidelity or preserving latent representations through attention masking.<br>In contrast, DBL-Decompose leverages diffusion priors to generate perceptually plausible and visually coherent background layers rather than directly reproducing the ground-truth frames. Morevoer, our method produces cleaner and more realistic backgrounds while maintaining high-quality foreground layers with accurate object boundaries and scene-dependent effects.</p>
+  <p class="note">While reconstruction-oriented methods such as Gen-Omnimatte and OmnimatteZero achieve higher PSNR/SSIM/LPIPS scores, this is expected since they are explicitly designed to reconstruct the input video by optimizing pixel-level fidelity or preserving latent representations through attention masking.<br>In contrast, DBL-Decompose leverages diffusion priors to generate perceptually plausible and visually coherent background layers rather than directly reproducing the ground-truth frames. As shown in above results, our method produces cleaner and more realistic backgrounds while maintaining high-quality foreground layers with accurate object boundaries and scene-dependent effects.</p>
 </section>
 
 <section id="ablation" class="section wrap">
