@@ -121,7 +121,7 @@ nav.top .wrap{display:flex; align-items:center; justify-content:space-between; h
 
 .figure-slot{position:relative; border:1px dashed var(--line); border-radius:16px; background:repeating-linear-gradient(135deg,var(--card2),var(--card2) 10px,#1c222a 10px,#1c222a 20px); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; color:var(--muted); font-family:var(--mono); font-size:.78rem; text-align:center; padding:20px;}
 .figure-slot .playbig{width:54px; height:54px; border-radius:50%; background:var(--green); color:#08150F; display:flex; align-items:center; justify-content:center; font-size:1rem}
-.figure-slot.teaser{aspect-ratio:21/9}
+.figure-slot.teaser{aspect-ratio:16/9}
 .figure-slot.teaser iframe {
   width: 100%;
   height: 100%;
@@ -240,8 +240,12 @@ footer{border-top:1px solid var(--line); padding:34px 0; text-align:center; colo
 
 <div class="wrap" style="padding-bottom:8px">
   <div class="figure-slot teaser">
-    <span class="playbig">▶</span>
-    <span>Teaser video — drop the project video in here (16:9 or 21:9, autoplay/muted loop)</span>
+    <iframe
+        src="https://www.youtube.com/embed/Q5SmYOrzfUg?si=tpcoFAaSn9vEY5OF"
+        title="Teaser"
+        frameborder="0"
+        allowfullscreen>
+    </iframe>
   </div>
 </div>
 
