@@ -3,28 +3,22 @@ layout: null
 ---
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  {% for post in site.posts %}
+  {% for page in site.pages %}
+    {% if page.url contains '.xml' or page.url contains '.css' %}{% else %}
     <url>
-      <!-- 💡 여기에 site.baseurl을 추가해 줍니다 -->
-      <loc>{{ site.url }}{{ site.baseurl }}{{ post.url }}</loc>
-      {% if post.lastmod == null %}
-        <lastmod>{{ post.date | date_to_xmlschema }}</lastmod>
-      {% else %}
-        <lastmod>{{ post.lastmod | date_to_xmlschema }}</lastmod>
-      {% endif %}
-
-      {% if post.sitemap.changefreq == null %}
-        <changefreq>weekly</changefreq>
-      {% else %}
-        <changefreq>{{ post.sitemap.changefreq }}</changefreq>
-      {% endif %}
-
-      {% if post.sitemap.priority == null %}
-          <priority>0.5</priority>
-      {% else %}
-        <priority>{{ post.sitemap.priority }}</priority>
-      {% endif %}
-
+      <loc>{{ site.url }}{{ site.baseurl }}{{ page.url }}</loc>
+      <changefreq>monthly</changefreq>
+      <priority>0.8</priority>
     </url>
+    {% endif %}
+  {% endfor %}
+  {% for html_page in site.html_pages %}
+    {% if html_page.url == '/' %}
+    <url>
+      <loc>{{ site.url }}{{ site.baseurl }}/</loc>
+      <changefreq>weekly</changefreq>
+      <priority>1.0</priority>
+    </url>
+    {% endif %}
   {% endfor %}
 </urlset>
