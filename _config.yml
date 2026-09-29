@@ -1,7 +1,7 @@
 # 사이트 기본 정보
-title: DBL-Diffusion
-description: DBL-Diffusion: Explicit Layer Modeling for Video Object Insertion and Video Layer Decomposition
-author: Kyujin Han
+title: "DBL-Diffusion"
+description: "DBL-Diffusion: Explicit Layer Modeling for Video Object Insertion and Video Layer Decomposition"
+author: "Kyujin Han"
 
 # URL 설정 (username.github.io 또는 사용자 페이지 주소)
 url: "https://kyujinhan.github.io"
